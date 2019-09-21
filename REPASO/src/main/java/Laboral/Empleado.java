@@ -14,9 +14,20 @@ public class Empleado extends Persona{
 	private int categoria;
 	int anyos;
 	
+	
+	/**
+	 * @param nombre
+	 * @param dni
+	 * @param sexo
+	 * @param categoria
+	 * @param anyos
+	 * @throws DatosNoCorrectosException
+	 */
+	
+	
 	public Empleado(String nombre, String dni, char sexo, int categoria, int anyos) throws DatosNoCorrectosException {
 		
-		super(dni, dni, sexo);
+		super(nombre, dni, sexo);
 		this.setCategoria(categoria);
 		if(anyos<0) {
 			throw new DatosNoCorrectosException("Anyos no correctos");
@@ -29,7 +40,7 @@ public class Empleado extends Persona{
 	
 	public Empleado(String nombre, String dni, char sexo) {
 		
-		super(dni, dni, sexo);
+		super(nombre, dni, sexo);
 		
 		this.categoria = 1;
 		this.anyos = 0;
@@ -61,7 +72,7 @@ public class Empleado extends Persona{
 	
 	public String imprime() {
 		
-		return nombre + dni + sexo + categoria + anyos;
+		return this.nombre + "-" + this.dni + "-" + this.sexo + "-" + this.categoria + "-" + this.anyos;
 		
 	}
 	

@@ -16,7 +16,9 @@ public class Persona {
 	char sexo;
 	
 	/**
-	 * @param args
+	 * @param nombre
+	 * @param dni
+	 * @param sexo
 	 */
 	
 	public Persona(String nombre, String dni, char sexo) {
