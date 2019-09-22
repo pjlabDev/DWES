@@ -3,4 +3,15 @@
   <groupId>Nomina_Repaso</groupId>
   <artifactId>Nomina_Repaso</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+		
+	<dependencies>
+	
+		<dependency>
+	    	<groupId>ojdbc14</groupId>
+	    	<artifactId>ojdbc14</artifactId>
+	    	<version>10.2.0.4.0</version>
+		</dependency>
+	
+	</dependencies>
+	  
 </project>
