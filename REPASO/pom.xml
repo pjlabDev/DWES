@@ -6,12 +6,28 @@
 		
 	<dependencies>
 	
-		<dependency>
+<!-- 		<dependency>
 	    	<groupId>ojdbc14</groupId>
 	    	<artifactId>ojdbc14</artifactId>
 	    	<version>10.2.0.4.0</version>
-		</dependency>
+		</dependency> -->
+		
+		<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
+	<dependency>
+	    <groupId>com.oracle</groupId>
+	    <artifactId>ojdbc14</artifactId>
+	    <version>10.2.0.4.0</version>
+	</dependency>
+		
 	
 	</dependencies>
+	
+	  <repositories>
+	    <repository>
+	      <id>oracle</id>
+	      <name>oracle</name>
+	      <url>https://mvnrepository.com/artifact/com.oracle/ojdbc14</url>
+	    </repository>
+	  </repositories>
 	  
 </project>
