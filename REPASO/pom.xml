@@ -2,23 +2,16 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Nomina_Repaso</groupId>
   <artifactId>Nomina_Repaso</artifactId>
+  <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
 		
 	<dependencies>
 	
-<!-- 		<dependency>
+ 		<dependency>
 	    	<groupId>ojdbc14</groupId>
 	    	<artifactId>ojdbc14</artifactId>
 	    	<version>10.2.0.4.0</version>
-		</dependency> -->
-		
-		<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
-	<dependency>
-	    <groupId>com.oracle</groupId>
-	    <artifactId>ojdbc14</artifactId>
-	    <version>10.2.0.4.0</version>
-	</dependency>
-		
+		</dependency> 
 	
 	</dependencies>
 	

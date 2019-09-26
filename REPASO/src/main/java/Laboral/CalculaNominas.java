@@ -17,7 +17,6 @@ public class CalculaNominas {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		Scanner sx = new Scanner(System.in);
-		Nomina n = new Nomina();
 		Ficheros f = new Ficheros();
 		BBDD bd = new BBDD();
 		
@@ -29,7 +28,7 @@ public class CalculaNominas {
 			
 			
 			/**
-			 * 1ª Parte de Nomina
+			 * 1ï¿½ Parte de Nomina
 			 * 
 			 */
 			
@@ -51,13 +50,13 @@ public class CalculaNominas {
 			
 			
 			/**
-			 * Modificar el código para que el programa lea la información necesaria de los
-			 * empleados desde un fichero de texto “empleados.txt” y escriba en un fichero
-			 * binario “salarios.dat” el dni del empleado junto con su sueldo calculado. Debes:
+			 * Modificar el cï¿½digo para que el programa lea la informaciï¿½n necesaria de los
+			 * empleados desde un fichero de texto ï¿½empleados.txtï¿½ y escriba en un fichero
+			 * binario ï¿½salarios.datï¿½ el dni del empleado junto con su sueldo calculado. Debes:
 			 * 
-			 * 1.1. Definir el fichero de texto de entrada “empleados.txt” creando en el mismos
-			 * los empleados de los apartados 4.1 y 4.2 con el formato más adecuado para
-			 * que pueda ser leído por el programa. Puedes incluir más empleados.
+			 * 1.1. Definir el fichero de texto de entrada ï¿½empleados.txtï¿½ creando en el mismos
+			 * los empleados de los apartados 4.1 y 4.2 con el formato mï¿½s adecuado para
+			 * que pueda ser leï¿½do por el programa. Puedes incluir mï¿½s empleados.
 			 */
 			
 			String fichero = "empleados.txt";
@@ -72,7 +71,7 @@ public class CalculaNominas {
 			
 			
 			/**
-			 * 1.2. Actualizar dicho fichero “empleados.txt” conforme a los cambios especificados
+			 * 1.2. Actualizar dicho fichero ï¿½empleados.txtï¿½ conforme a los cambios especificados
 			 * en el apartado 4.5.
 			 */
 			
@@ -92,7 +91,7 @@ public class CalculaNominas {
 			
 			
 			/**
-			 * 1.3. Definir el fichero binario de salida “sueldos.dat” con el formato más adecuado
+			 * 1.3. Definir el fichero binario de salida ï¿½sueldos.datï¿½ con el formato mï¿½s adecuado
 			 * para almacenar el dni y el sueldo resultante para cada empleado.
 			 */
 			
@@ -105,14 +104,14 @@ public class CalculaNominas {
 			
 			
 			/**
-			 * 2. Modificar el código para que el programa lea la información necesaria de los
+			 * 2. Modificar el cï¿½digo para que el programa lea la informaciï¿½n necesaria de los
 			 * empleados desde una base de datos con, al menos, una tabla Empleados y una
 			 * tabla Nominas. Debes:
 			 * 
 			 * 2.1. Definir e implementar el modelo de tablas y relaciones necesarios para dar
-			 * soporte a la aplicación de control de nóminas. Definir en la tabla correspondiente
+			 * soporte a la aplicaciï¿½n de control de nï¿½minas. Definir en la tabla correspondiente
 			 * de dicha base de datos los mismos los empleados de los apartados 4.1 y 4.2 de
-			 * la parte 1 para que pueda ser leído por el programa. Puedes incluir más registros
+			 * la parte 1 para que pueda ser leï¿½do por el programa. Puedes incluir mï¿½s registros
 			 * de empleados. 
 			 * 
 			 * Las tablas las creamos dentro de la base de datos antes de hacer nada.
@@ -151,8 +150,8 @@ public class CalculaNominas {
 			bd.leerTablaNominas();
 			
 			/**
-			 * 3. Modificar el código para crear un método “altaEmpleado” que permita dar de alta
-			 * empleados en el sistema y que, de forma automática, calcule y almacene el sueldo
+			 * 3. Modificar el cï¿½digo para crear un mï¿½todo ï¿½altaEmpleadoï¿½ que permita dar de alta
+			 * empleados en el sistema y que, de forma automï¿½tica, calcule y almacene el sueldo
 			 * de los empleados en la base de datos.
 			 */
 			
@@ -168,8 +167,8 @@ public class CalculaNominas {
 			bd.leerTablaNominas();
 			
 			/**
-			 * 3.1. Sobrecargar el método “altaEmpleado” para que permita el alta de empleados
-			 * de forma individual o por lotes a partir de un fichero “empleadosNuevos.txt”
+			 * 3.1. Sobrecargar el mï¿½todo ï¿½altaEmpleadoï¿½ para que permita el alta de empleados
+			 * de forma individual o por lotes a partir de un fichero ï¿½empleadosNuevos.txtï¿½
 			 * con los datos de los empleados a dar de alta en el sistema.
 			 */
 			
@@ -231,7 +230,7 @@ public class CalculaNominas {
 					
 				}else if(opcion == 3) {
 					
-					System.out.println("¿Que desea modificar?");
+					System.out.println("ï¿½Que desea modificar?");
 					
 					do {
 						
@@ -271,7 +270,7 @@ public class CalculaNominas {
 							
 							System.out.println("DNI del empleado a modificar: ");
 							dni = sx.nextLine();
-							System.out.println("A continuacion los años que lleva en la empresa.");
+							System.out.println("A continuacion los aï¿½os que lleva en la empresa.");
 							anyos = sc.nextInt();
 							bd.modificarAnyosEmpleadoDNI(anyos, dni);
 							
@@ -326,12 +325,12 @@ public class CalculaNominas {
 	
 	
 	
-	private static String escribir(Empleado e) {
-		
-		Nomina n = new Nomina();
-		
-		return e.imprime() + " " + n.sueldo(e);
-		
-	}
+//	private static String escribir(Empleado e) {
+//		
+//		Nomina n = new Nomina();
+//		
+//		return e.imprime() + " " + n.sueldo(e);
+//		
+//	}
 
 }
