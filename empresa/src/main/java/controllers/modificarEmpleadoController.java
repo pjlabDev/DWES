@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,8 +42,29 @@ public class modificarEmpleadoController extends HttpServlet {
 		
 		BBDD bd = new BBDD();
 		
+		RequestDispatcher rd;
 		
+		String dni = request.getParameter("dni");
 		
+		String nombre = request.getParameter("nombre");
+		
+		bd.modificarNombreEmpleado(nombre, dni);
+		
+		String sexo = request.getParameter("sexo");
+		
+		bd.modificarSexoEmpleado(sexo, dni);
+		
+		int categoria = Integer.parseInt(request.getParameter("categoria"));
+		
+		bd.modificarCategoriaEmpleado(dni, categoria);
+		
+		int anyos = Integer.parseInt(request.getParameter("anyos"));
+		
+		bd.modificarAnyosEmpleadoDNI(anyos, dni);
+		
+		rd = request.getRequestDispatcher("empleadoModificado.jsp");
+		
+		rd.forward(request, response);
 		
 	}
 
