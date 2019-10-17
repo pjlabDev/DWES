@@ -24,6 +24,13 @@
   	<servlet-name>modificarEmpleadoController</servlet-name>
   	<servlet-class>controllers.modificarEmpleadoController</servlet-class>
   </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>modificarEmpleadoBDController</display-name>
+  	<servlet-name>modificarEmpleadoBDController</servlet-name>
+  	<servlet-class>controllers.modificarEmpleadoBDController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>mostrarEmpleadosController</servlet-name>
   	<url-pattern>/mostrarEmpleadosController</url-pattern>
@@ -35,5 +42,9 @@
   <servlet-mapping>
   	<servlet-name>modificarEmpleadoController</servlet-name>
   	<url-pattern>/modificarEmpleadoController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>modificarEmpleadoBDController</servlet-name>
+  	<url-pattern>/modificarEmpleadoBDController</url-pattern>
   </servlet-mapping>
 </web-app>

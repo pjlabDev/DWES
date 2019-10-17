@@ -621,11 +621,51 @@ public class BBDD {
 				salario = rs.getString(1);
 				
 			}
-			
-			
 				
 			return salario;
 		
+	}
+	
+	public Empleado mostrarEmpleadoDni(String dni) throws ClassNotFoundException, SQLException, DatosNoCorrectosException {
+		
+		Empleado emp = null;
+	
+		Class.forName(forName);
+		
+		con = DriverManager.getConnection(url,user,pass);
+		
+		pst = con.prepareStatement("SELECT * FROM EMPLEADOS WHERE DNI = ?");
+		
+		pst.setString(1, dni);
+		
+		rs = pst.executeQuery();
+		
+		while(rs.next()) {
+			
+			emp = new Empleado(rs.getString("nombre"),rs.getString("dni"),rs.getString("sexo").charAt(0),rs.getInt("categoria"),rs.getInt("anyos"));
+			
+		}
+		
+			
+		return emp;
+	
+	}
+	
+	public void modificarEmpelado(String dni, String nombre, String sexo, String categoria, String anyos) throws ClassNotFoundException, SQLException, DatosNoCorrectosException {
+	
+		Class.forName(forName);
+		
+		con = DriverManager.getConnection(url,user,pass);
+		
+		st = con.createStatement();
+		
+		st.executeUpdate("UPDATE EMPLEADOS SET NOMBRE = '" + nombre + "' WHERE DNI = '" + dni + "'");
+		st.executeUpdate("UPDATE EMPLEADOS SET SEXO = '" + sexo + "' WHERE DNI = '" + dni + "'");
+		st.executeUpdate("UPDATE EMPLEADOS SET CATEGORIA = '" + categoria + "' WHERE DNI = '" + dni + "'");
+		st.executeUpdate("UPDATE EMPLEADOS SET ANYOS = '" + anyos + "' WHERE DNI = '" + dni + "'");
+		st.executeUpdate("UPDATE NOMINAS SET SUELDO = " + Nomina.sueldoController(Integer.parseInt(categoria), Integer.parseInt(anyos)) + " WHERE DNI = '" + dni + "'");	
+		st.close();
+		con.close();
 	}
 	
 	public void modificarNombreEmpleado(String nombre, String dni) {

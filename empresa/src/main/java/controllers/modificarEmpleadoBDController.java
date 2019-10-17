@@ -11,18 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import laboral.BBDD;
 import laboral.DatosNoCorrectosException;
-import laboral.Empleado;
 
 /**
- * Servlet implementation class modificarEmpleadoController
+ * Servlet implementation class modificarEmpleadoBDController
  */
-public class modificarEmpleadoController extends HttpServlet {
+public class modificarEmpleadoBDController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public modificarEmpleadoController() {
+    public modificarEmpleadoBDController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,20 +44,25 @@ public class modificarEmpleadoController extends HttpServlet {
 		
 		BBDD bd = new BBDD();
 		
-		Empleado emp = null;
-		
 		RequestDispatcher rd;
 		
 		String dni = request.getParameter("dni");
 		
-		request.setAttribute("dni", dni);
+		String nombre = request.getParameter("nombre");
+		
+		String sexo = request.getParameter("sexo");
+		
+		String categoria = request.getParameter("categoria");
+		
+		String anyos = request.getParameter("anyos");
 		
 		try {
 			
-			emp = bd.mostrarEmpleadoDni(dni);
+			bd.modificarEmpelado(dni, nombre, sexo, categoria, anyos);
 			
-			request.setAttribute("empleado", emp);
-		
+			rd = request.getRequestDispatcher("empleadoModificado.jsp");
+			
+			rd.forward(request, response);
 			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -72,9 +76,10 @@ public class modificarEmpleadoController extends HttpServlet {
 		}
 		
 		
-		rd = request.getRequestDispatcher("modificarEmpleado.jsp");
 		
-		rd.forward(request, response);
+		
+		
+		
 		
 	}
 

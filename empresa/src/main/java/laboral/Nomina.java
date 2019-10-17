@@ -16,11 +16,20 @@ public class Nomina {
 		
 	}
 	
-	public int sueldo(Empleado e) {
+	public static int sueldo(Empleado e) {
 		
 		int sueldo = SUELDO_BASE[e.getCategoria()-1] + (5000*e.anyos);
 		
 		return sueldo;
 		
+	}
+	
+	public static int sueldoController(int categoria, int anyos) {
+		
+		int sueldo = SUELDO_BASE[categoria-1] + (5000*anyos);
+		
+		return sueldo;
+		
 	}	
+	
 }

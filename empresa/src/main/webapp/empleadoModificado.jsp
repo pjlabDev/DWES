@@ -4,11 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Empleado modificado</title>
+<title>Insert title here</title>
 </head>
 <body>
-
 	
-
+	<h2>BIEEN</h2>
+	
+	<a href="index.html"><button>Volver</button> </a>
+	
 </body>
 </html>
