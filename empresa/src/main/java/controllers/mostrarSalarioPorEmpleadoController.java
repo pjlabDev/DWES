@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import laboral.BBDD;
+import laboral.DatosNoCorrectosException;
+import laboral.Empleado;
 
 /**
  * Servlet implementation class mostrarSalarioPorEmpleadoController
@@ -44,10 +46,14 @@ public class mostrarSalarioPorEmpleadoController extends HttpServlet {
 		
 		BBDD bd = new BBDD();
 		RequestDispatcher rd;
-		
+		Empleado emp;
 		String salario = null;
 		
 		try {
+			
+			emp = bd.mostrarEmpleadoDni(request.getParameter("dni"));
+			
+			request.setAttribute("dniEmp", emp.getDni());
 			
 			salario = bd.mostrarSalarioPorEmpleado(request.getParameter("dni"));
 			
@@ -61,6 +67,9 @@ public class mostrarSalarioPorEmpleadoController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DatosNoCorrectosException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
