@@ -8,20 +8,16 @@
 </head>
 <body>
 	
-	<form action="modificarEmpleadoBDController" method="POST">
+	<form action="appController" method="POST">
 		
 		<input type="text" name="dni" value="${empleado.dni}" readonly="readonly"> <br>
 		<input type="text" name="nombre" value="${empleado.nombre}"> <br>
 		<input type="text" name="sexo" value="${empleado.sexo}"> <br>
 		<input type="text" name="categoria" value="${empleado.categoria}"> <br>
 		<input type="text" name="anyos" value="${empleado.anyos}"> <br>
-		<input type="submit" name="enviar" value="Modificar">
+		<input type="submit" name="action" value="Modificar">
 		
 	</form>
-	
-	
-	
-	
-	
+
 </body>
 </html>
