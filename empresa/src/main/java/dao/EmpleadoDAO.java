@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import interfaces.IServiceDAO;
 import laboral.DatosNoCorrectosException;
 import laboral.Empleado;
 
@@ -14,7 +15,7 @@ import laboral.Empleado;
  * @author estudiante
  *
  */
-public class EmpleadoDAO {
+public class EmpleadoDAO implements IServiceDAO {
 	
 	EmpleadoServiceDAO esDAO = new EmpleadoServiceDAO();
 	
