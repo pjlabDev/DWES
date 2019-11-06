@@ -3,8 +3,6 @@
  */
 package laboral;
 
-import java.sql.SQLException;
-
 /**
  * @author pedro
  *

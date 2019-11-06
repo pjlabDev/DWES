@@ -58,7 +58,7 @@
 			
 	</table>
 	
-	<a href="index.jsp"><button>Volver</button></a>
+	<a href="index.html"><button>Volver</button></a>
 	
 	
 </body>

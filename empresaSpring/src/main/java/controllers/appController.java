@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.EmpleadoDAO;
-import laboral.BBDD;
 import laboral.DatosNoCorrectosException;
 import laboral.Empleado;
 
