@@ -8,9 +8,9 @@
 </head>    
 <body>
 	
-	<form action="/index" method="POST">
+	<form action="/empleados" method="POST">
 		
-		<input type="submit" name="action" value="Mostrar Empleados">	
+		<input type="submit" name="action" value="Mostrar Empleados">
 	
 	</form>
 	
