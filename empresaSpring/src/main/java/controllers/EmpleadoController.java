@@ -32,8 +32,50 @@ public class EmpleadoController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/index", method = RequestMethod.POST)
-	public String goHome(@RequestParam String action, Model model)
+	@RequestMapping(value = "/empleados", method = RequestMethod.POST)
+	public String mostrarEmpleados(@RequestParam String action, Model model)
+			throws ClassNotFoundException, SQLException, DatosNoCorrectosException {
+
+		empDAO = new EmpleadoDAO();
+
+		if (action.equals("Mostrar Empleados")) {
+
+			List<Empleado> empleado = empDAO.mostrarEmpleados();
+
+			model.addAttribute("listaEmp", empleado);
+
+			pag = "mostrarEmpleados";
+
+		}
+
+		return pag;
+
+	}
+	
+	@RequestMapping(value = "/empDNI", method = RequestMethod.POST)
+	public String introduceDNI(@RequestParam String action,@RequestParam String dni, Model model)
+			throws ClassNotFoundException, SQLException, DatosNoCorrectosException {
+
+		empDAO = new EmpleadoDAO();
+
+		if (action.equals("Mostrar Salario")) {
+
+			Empleado empleado = empDAO.mostrarEmpleadosDni(dni);
+
+			model.addAttribute("dniEmp", empleado.getDni());
+			
+			model.addAttribute("salarioEmp", empleado);
+
+			pag = "modificarEmpleados";
+
+		}
+
+		return pag;
+
+	}
+	
+	@RequestMapping(value = "/salario", method = RequestMethod.POST)
+	public String mostrarSalarioEmp(@RequestParam String action, Model model)
 			throws ClassNotFoundException, SQLException, DatosNoCorrectosException {
 
 		empDAO = new EmpleadoDAO();

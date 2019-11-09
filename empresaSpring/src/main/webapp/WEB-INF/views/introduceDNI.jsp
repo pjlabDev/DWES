@@ -8,7 +8,7 @@
 </head>
 <body>
 	
-	<form action="appController" method="POST">
+	<form action="/empDNI" method="POST">
 	
 		<input type="text" name="dni">
 		<input type="submit" name="action" value="Mostrar Salario">

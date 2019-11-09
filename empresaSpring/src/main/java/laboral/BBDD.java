@@ -32,7 +32,7 @@ public class BBDD {
 	ResultSet rs;
 	int result;
 	String forName = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@192.168.2.188:1521:xe";
+	String url = "jdbc:oracle:thin:@192.168.14.203:1521:xe";
 	String user = "Empresa";
 	String pass = "empresa";
 	
