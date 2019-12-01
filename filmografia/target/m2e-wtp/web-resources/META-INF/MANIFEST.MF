@@ -1,0 +1,13 @@
+<<<<<<< HEAD:appNominaSpring/target/classes/META-INF/MANIFEST.MF
+Manifest-Version: 1.0
+Built-By: pedro
+Build-Jdk: 1.8.0_221
+Created-By: Maven Integration for Eclipse
+
+=======
+Manifest-Version: 1.0
+Built-By: usuario
+Build-Jdk: 11
+Created-By: Maven Integration for Eclipse
+
+>>>>>>> b847feed1cd805a6867884f49160be1e33a53ad1:filmografia/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
