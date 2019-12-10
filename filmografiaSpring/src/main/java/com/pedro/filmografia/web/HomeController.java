@@ -4,6 +4,7 @@
 package com.pedro.filmografia.web;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,26 +12,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.pedro.filmografia.repository.PeliculaDao;
 
 /**
  * @author pedro
  *
  */
 @Controller
-public class HelloController {
+public class HomeController {
 
 	protected final Log logger = LogFactory.getLog(getClass());
+	
+	@Autowired
+	PeliculaDao peliculaDao;
 
-	@RequestMapping(value = "/hello.htm")
+	@RequestMapping(value = "/principal.htm")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		logger.info("Returning hello view");
+		String now = (new Date()).toString();
+        logger.info("Returning hello view with " + now);
 
-		return new ModelAndView("hello.jsp");
+        return new ModelAndView("hello", "now", now);
 	}
 
 }
