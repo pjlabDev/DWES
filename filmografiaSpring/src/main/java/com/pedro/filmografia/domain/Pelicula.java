@@ -3,18 +3,21 @@
  */
 package com.pedro.filmografia.domain;
 
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * @author pedro
  *
  */
-public class Pelicula {
 
-	@Size(min = 2, max = 20)
+public class Pelicula implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	private String director;
 	
 	private String titulo;
+	
 	private String fecha;
 
 	public Pelicula(String director, String titulo, String fecha) {

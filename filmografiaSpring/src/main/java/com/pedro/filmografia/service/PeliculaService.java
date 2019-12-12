@@ -8,14 +8,16 @@ import java.util.List;
 import java.util.TreeSet;
 
 import com.pedro.filmografia.domain.Pelicula;
+import com.pedro.filmografia.domain.Usuario;
 
 /**
  * @author pedro
  *
  */
 public interface PeliculaService {
-		
+	
 	public List<Pelicula> mostrarPeliculasDirector(String director) throws SQLException;
+	public List<Usuario> mostrarUsuarios() throws SQLException;
 	public String loginDirector(String nombre, String password) throws SQLException;
 	public List<Pelicula> mostrarPelis() throws SQLException;
 	public String altaDirector(String director, String pass) throws SQLException;

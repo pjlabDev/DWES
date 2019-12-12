@@ -13,7 +13,7 @@ CREATE TABLE usuario (
 	password VARCHAR(20)
 );
 
-INSERT INTO pelicula VALUES('Pedro','Peliculasa',SYSDATE());
+INSERT INTO pelicula VALUES('Pedro','La Casa de Papel',SYSDATE());
 INSERT INTO pelicula VALUES('James Gunn','Guardianes de la Galaxia V.1 V.2',SYSDATE());
 INSERT INTO pelicula VALUES('Stan Lee','Spiderman',SYSDATE());
 

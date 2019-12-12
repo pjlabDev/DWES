@@ -5,24 +5,36 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<title>Consulta Director</title>
+<title>Alta Pelicula</title>
 </head>
 <body>
-	
-	<a class="bVolver" href="/filmografiaSpring/filmografia/principal"><button type="button" class="btn btn-warning">Volver</button></a>
-	
+
 	<div style="text-align:center">
 	
-		<h2>Introduzca el nombre de un director</h2>
-		<br>
-		<form action="consultar" method="POST">
+		<h2>Bienvenido al alta de Peliculas</h2>
+	
+		<p>Rellenando el siguiente formulario podrás añadir una nueva pelicula.</p>
 		
-			<input type="text" name="director">
-			<p style="color:red">${ message }</p>
-			<input type="submit" class="btn btn-primary" value="Consultar">
+		<form action="addPeliculas" method="POST">
+			
+			<div class="form-group">
+			
+				<label>Nombre director</label>
+				<input class="form-control" type="text" name="director" placeholder="Nombre director" required>
+				<label>Titulo pelicula</label>
+				<input class="form-control" type="text" name="titulo" placeholder="Titulo pelicula" required>
+				<label>Fecha de alta</label>
+				<input class="form-control" type="text" name="fecha" placeholder="YYYY-MM-DD" required>
+				<small class="form-text text-muted">Formato de fecha YYYY-MM-DD</small>
+				<br>
+				<input class="btn btn-success" type="submit" value="Anadir pelicula">
+				
+			</div>
 		
 		</form>
-	
+		
+		<a href="MantenimientoPelicula"><button type="button" class="btn btn-danger">Cancelar</button></a>
+		
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

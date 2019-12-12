@@ -1,25 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<title>Consulta Director</title>
+<title>Eliminar pelicula</title>
 </head>
 <body>
 	
-	<a class="bVolver" href="/filmografiaSpring/filmografia/principal"><button type="button" class="btn btn-warning">Volver</button></a>
+	<a href="MantenimientoPelicula"><button style="float: right" type="button" class="btn btn-success">Volver</button></a>
 	
 	<div style="text-align:center">
 	
-		<h2>Introduzca el nombre de un director</h2>
-		<br>
-		<form action="consultar" method="POST">
-		
-			<input type="text" name="director">
-			<p style="color:red">${ message }</p>
-			<input type="submit" class="btn btn-primary" value="Consultar">
+		<form action="deletePeliculas" method="POST">
+	
+			<h3>Titulo de la pelicula a eliminar</h3>
+			
+			<select class="form-control" name="titulo" required>
+			
+				<option selected style="color:gray">PELICULAS</option>
+
+				<c:forEach items="${listaPelis}" var="item">
+
+					<option>${item.titulo}</option>
+
+				</c:forEach>
+				
+				<c:forEach items="${model.listaPelis}" var="item">
+
+					<option>${item.titulo}</option>
+
+				</c:forEach>
+				
+			</select>
+			
+			<p style="color:red">${model.message}</p>
+			
+			<br>
+			<br>
+			
+			<input type="submit" class="btn btn-danger" value="Eliminar">
 		
 		</form>
 	

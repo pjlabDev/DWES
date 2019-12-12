@@ -1,4 +1,4 @@
 <%@ include file="/WEB-INF/views/include.jsp" %>
 
 
-<c:redirect url="/principal.htm"/>
+<c:redirect url="/filmografia/principal"/>
