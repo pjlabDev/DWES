@@ -17,32 +17,10 @@
 		<br>
 
 		<form action="updatePeliculas" method="POST">
+		
+			<input type="text" name="tituloPeli" value="${tituloPeli}" style="visibility:hidden">
 			
-			<select class="form-control" name="tituloPeli" required>
-			
-				<option selected style="color:gray">PELICULAS</option>
-
-				<c:forEach items="${listaPelis}" var="item">
-
-					<option>${item.titulo}</option>
-
-				</c:forEach>
-				
-				<c:forEach items="${model.listaPelis}" var="item">
-
-					<option>${item.titulo}</option>
-
-				</c:forEach>
-
-			</select>
-			
-			<p style="color:red">${model.message}</p>
-			
-			<br>
-			<br>
-	
 			<div class="form-group">
-				
 				<label>Director</label>
 				<input class="form-control" type="text" name="director" placeholder="Director" required>
 				<label>Titulo</label>

@@ -23,6 +23,8 @@
 							<td>Director</td>
 							<td>Título</td>
 							<td>Fecha</td>
+							<td>Modificar</td>
+							<td>Eliminar</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -33,6 +35,14 @@
 								<td>${item.director}</td>
 								<td>${item.titulo}</td>
 								<td>${item.fecha}</td>
+								<td>
+									<form action="updateFormPeliculas" method="POST">
+										
+										<input type="text" name="tituloPeli" value="${item.titulo}" style="visibility:hidden">
+										<input type="submit" class="btn btn-success" value="Modificar">
+									
+									</form>
+								</td>
 							</tr>
 
 						</c:forEach>

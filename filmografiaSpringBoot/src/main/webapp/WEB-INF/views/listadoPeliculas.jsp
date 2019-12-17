@@ -12,7 +12,7 @@
 
 	<div style="text-align:center">
 
-		<h2>Listado de peliculas del director: ${model.director}</h2>
+		<h2>Listado de peliculas del director: ${director}</h2>
 
 		<br>
 
@@ -26,7 +26,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${model.listaPelis}" var="item">
+						<c:forEach items="${listaPelis}" var="item">
 
 							<tr>
 

@@ -16,13 +16,11 @@ import javax.persistence.Table;
 public class Usuario {
 	
 	@Id
-	private Integer id;
 	private String nombre;
 	private String password;
 	
 	public Usuario(Integer id,String nombre, String password) {
 		
-		this.id = id;
 		this.nombre = nombre;
 		this.password = password;
 		
@@ -51,13 +49,4 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
-	
 }

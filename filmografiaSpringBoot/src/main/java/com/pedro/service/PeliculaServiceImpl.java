@@ -4,7 +4,6 @@
 package com.pedro.service;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,38 +34,19 @@ public class PeliculaServiceImpl implements PeliculaService {
 	int result;
 	int result2;
 	int result3;
-	String forName = "com.mysql.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/cine";
-	String user = "root";
-	String pass = "root";
-	Query query;
 	Pelicula p = new Pelicula();
 	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Eclipselink_JPA");
-	EntityManager em = emfactory.createEntityManager();
 
-	public PeliculaServiceImpl() {
-
-		try {
-
-			Class.forName(forName);
-			con = DriverManager.getConnection(url, user, pass);
-			em.getTransaction().begin();
-
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
+	
+	@SuppressWarnings("unchecked")
 	public List<Pelicula> mostrarPeliculasDirector(String director) throws SQLException {
-
-		List<Pelicula> listaPelis = new ArrayList<>();
-
-		query = em.createQuery("SELECT p FROM Pelicula p WHERE p.director = :director", Pelicula.class);
+		
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		
+		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		
+		Query query = em.createQuery("SELECT p FROM Pelicula p WHERE p.director = :director", Pelicula.class);
 		query.setParameter("director", director);
 
 		listaPelis = query.getResultList();
@@ -75,105 +55,88 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 	}
 
-	public String loginDirector(String nombre, String password) throws SQLException {
+	@SuppressWarnings("unchecked")
+	public List<Usuario> loginDirector(String nombre, String password) throws SQLException {
+		
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		
+		List<Usuario> listaUser = new ArrayList<Usuario>();
+		
+		Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.nombre = :nombre AND u.password = :password", Usuario.class);
+		query.setParameter("nombre", nombre);
+		query.setParameter("password", password);
+		
+		listaUser = query.getResultList();
 
-		String linea = null;
-
-		st = con.createStatement();
-
-		rs = st.executeQuery("SELECT * FROM usuario WHERE nombre = '" + nombre + "' AND password = '" + password + "'");
-
-		while (rs.next()) {
-
-			linea = rs.getString(1);
-
-		}
-
-		return linea;
+		return listaUser;
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Pelicula> mostrarPelis() throws SQLException {
 
-		List<Pelicula> listaPelis = new ArrayList<>();
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		
+		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		
+		Query query = em.createQuery("SELECT p FROM Pelicula p", Pelicula.class);
 
-		st = con.createStatement();
-
-		rs = st.executeQuery("SELECT * FROM pelicula");
-
-		while (rs.next()) {
-
-			listaPelis.add(new Pelicula(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
-
-		}
+		listaPelis = query.getResultList();
 
 		return listaPelis;
 
 	}
 
-	public String altaDirector(String director, String pass) throws SQLException {
+	public void altaDirector(String usuario, String pass) throws SQLException {
+		
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		
+		Usuario u = new Usuario();
+		u.setNombre(usuario);
+		u.setPassword(pass);
+		
+		em.persist(u);
+		em.getTransaction( ).commit( );
+		
+	}
 
-		String message = null;
-
-		pst = con.prepareStatement("INSERT INTO usuario VALUES(?,?)");
-
-		pst.setString(1, director);
-		pst.setString(2, pass);
-
-		result = pst.executeUpdate();
-
-		if (result > 0) {
-			message = "Nuevo usuario administrador insertado en la base de datos.";
-		}
-
-		return message;
+	public void altaPelicula(String director, String titulo, String fecha) throws SQLException {
+		
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		
+		Pelicula p = new Pelicula();
+		p.setDirector(director);
+		p.setTitulo(titulo);
+		p.setFecha(fecha);
+		
+		em.persist(p);
+		em.getTransaction( ).commit( );
 
 	}
 
-	public String altaPelicula(String director, String titulo, String fecha) throws SQLException {
-
-		String message = null;
-
-		pst = con.prepareStatement("INSERT INTO pelicula VALUES(?,?,?)");
-
-		pst.setString(1, director);
-		pst.setString(2, titulo);
-		pst.setString(3, fecha);
-
-		result = pst.executeUpdate();
-
-		if (result > 0) {
-			message = "Nueva pelicula insertada en la base de datos.";
-		} else {
-			message = "Imposible insertar la pelicula, fijate en las indicaciones!!";
-		}
-
-		return message;
-
-	}
-
-	public String modificarPelicula(String director, String tituloPeli, String fecha, String titulo)
+	public void modificarPelicula(String director, String tituloPeli, String fecha, String titulo)
 			throws SQLException {
-
-		String message = null;
-
-		st = con.createStatement();
-
-		result = st
-				.executeUpdate("UPDATE pelicula SET director = '" + director + "' WHERE titulo = '" + tituloPeli + "'");
-		result2 = st.executeUpdate("UPDATE pelicula SET titulo = '" + titulo + "' WHERE titulo = '" + tituloPeli + "'");
-		result3 = st.executeUpdate("UPDATE pelicula SET fecha = '" + fecha + "' WHERE titulo = '" + tituloPeli + "'");
-
-		if (result > 0 || result2 > 0 || result3 > 0) {
-
-			message = "Pelicula modificada con exito.";
-
-		}
-
-		return message;
+		
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		
+		Query query = em.createQuery("UPDATE Pelicula p SET p.director = :director, p.titulo = :titulo, p.fecha = :fecha WHERE p.titulo = :tituloPeli");
+		
+		query.setParameter("director", director);
+		query.setParameter("titulo", titulo);
+		query.setParameter("fecha", fecha);
+		query.setParameter("tituloPeli", tituloPeli);
+		
+		query.executeUpdate();
+		em.getTransaction( ).commit( );
+		
 	}
 
-	public String eliminarPelicula(String titulo) throws SQLException {
+	public void eliminarPelicula(String titulo) throws SQLException {
 
 		String message = null;
 
@@ -187,8 +150,6 @@ public class PeliculaServiceImpl implements PeliculaService {
 			message = "Pelicula eliminada con exito.";
 		}
 
-		return message;
-
 	}
 
 	public TreeSet<String> listaDirectores() {
@@ -197,29 +158,20 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Usuario> mostrarUsuarios() throws SQLException {
+		
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		
 		List<Usuario> listaUsers = new ArrayList<>();
-
-		st = con.createStatement();
-
-		rs = st.executeQuery("SELECT * FROM usuario");
-
-		while (rs.next()) {
-
-			listaUsers.add(new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3)));
-
-		}
+		
+		Query query = em.createQuery("SELECT u FROM Usuario u");
+		
+		listaUsers = query.getResultList();
 
 		return listaUsers;
-	}
-
-	public String uuus(List<Pelicula> listaPelis) {
-
-		String linea = p.getDirector() + p.getTitulo() + p.getFecha();
-
-		return linea;
-
 	}
 
 }

@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<a style="float:left" href="principal"><button type="button" class="btn btn-warning">Volver</button></a>
+	<a style="float:left" href="/"><button type="button" class="btn btn-warning">Volver</button></a>
 	
 	<br>
 	

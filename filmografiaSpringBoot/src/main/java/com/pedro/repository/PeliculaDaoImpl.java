@@ -18,7 +18,7 @@ import com.pedro.service.PeliculaServiceImpl;
  * @author pedro
  *
  */
-@Repository(value = "peliculaDao")
+@Repository("peliculaDao")
 public class PeliculaDaoImpl implements PeliculaDao {
 
 	PeliculaServiceImpl pService = new PeliculaServiceImpl();
@@ -35,13 +35,13 @@ public class PeliculaDaoImpl implements PeliculaDao {
 
 	}
 
-	public String loginDirector(String nombre, String password) throws SQLException {
+	public List<Usuario> loginDirector(String nombre, String password) throws SQLException {
 
-		String linea = null;
+		List<Usuario> listaUser = new ArrayList<>();
 
-		linea = pService.loginDirector(nombre, password);
+		listaUser = pService.loginDirector(nombre, password);
 
-		return linea;
+		return listaUser;
 
 	}
 
@@ -55,44 +55,25 @@ public class PeliculaDaoImpl implements PeliculaDao {
 
 	}
 
-	public String altaDirector(String director, String pass) throws SQLException {
+	public void altaDirector(String director, String pass) throws SQLException {
 
-		String message = null;
-
-		message = pService.altaDirector(director, pass);
-
-		return message;
-
+		pService.altaDirector(director, pass);
 	}
 
-	public String altaPelicula(String director, String titulo, String fecha) throws SQLException {
+	public void altaPelicula(String director, String titulo, String fecha) throws SQLException {
 
-		String message = null;
-
-		message = pService.altaPelicula(director, titulo, fecha);
-		
-		return message;
-
+		pService.altaPelicula(director, titulo, fecha);
 	}
 
-	public String modificarPelicula(String director, String tituloPeli, String fecha, String titulo)
+	public void modificarPelicula(String director, String tituloPeli, String fecha, String titulo)
 			throws SQLException {
 
-		String message;
-
-		message = pService.modificarPelicula(director, tituloPeli, fecha, titulo);
-
-		return message;
+		pService.modificarPelicula(director, tituloPeli, fecha, titulo);
 	}
 
-	public String eliminarPelicula(String titulo) throws SQLException {
-
-		String message = null;
-
-		message = pService.eliminarPelicula(titulo);
-
-		return message;
-
+	public void eliminarPelicula(String titulo) throws SQLException {
+		
+		pService.eliminarPelicula(titulo);
 	}
 
 	public TreeSet<String> listaDirectores() {
