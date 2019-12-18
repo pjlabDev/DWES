@@ -22,11 +22,11 @@
 			
 			<div class="form-group">
 				<label>Director</label>
-				<input class="form-control" type="text" name="director" placeholder="Director" required>
+				<input class="form-control" type="text" name="director" value="${director}" placeholder="Director" required>
 				<label>Titulo</label>
-				<input class="form-control" type="text" name="titulo" placeholder="Titulo" required>
+				<input class="form-control" type="text" name="titulo" value="${tituloPeli}" placeholder="Titulo" required>
 				<label>Fecha</label>
-				<input class="form-control" type="text" name="fecha" placeholder="YYYY-MM-DD" required>
+				<input class="form-control" type="text" name="fecha" value="${fecha}" placeholder="YYYY-MM-DD" required>
 				<small class="form-text text-muted">Formato de fecha YYYY-MM-DD</small>
 				<br>
 				<input type="submit" class="btn btn-success" value="Modificar">

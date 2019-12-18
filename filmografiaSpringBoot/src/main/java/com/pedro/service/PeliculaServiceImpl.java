@@ -3,11 +3,7 @@
  */
 package com.pedro.service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -27,10 +23,6 @@ import com.pedro.modelo.Usuario;
 public class PeliculaServiceImpl implements PeliculaService {
 
 	TreeSet<String> listaDirectores = new TreeSet<>();
-	Connection con;
-	PreparedStatement pst;
-	Statement st;
-	ResultSet rs;
 	int result;
 	int result2;
 	int result3;
@@ -50,6 +42,10 @@ public class PeliculaServiceImpl implements PeliculaService {
 		query.setParameter("director", director);
 
 		listaPelis = query.getResultList();
+		
+		if(director != null && !listaPelis.isEmpty()) {
+			listaDirectores.add(director);
+		}
 
 		return listaPelis;
 
@@ -89,12 +85,20 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 	}
 
-	public void altaDirector(String usuario, String pass) throws SQLException {
+	@SuppressWarnings("unchecked")
+	public void altaUsuario(String usuario, String pass) throws SQLException {
 		
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
+		List<Integer> listaId = new ArrayList<Integer>();
+		
+		Query query = em.createQuery("SELECT MAX(u.id) FROM Usuario u");
+		
+		listaId = query.getResultList();
+		
 		Usuario u = new Usuario();
+		u.setId(listaId.get(0) + 1);
 		u.setNombre(usuario);
 		u.setPassword(pass);
 		
@@ -103,12 +107,20 @@ public class PeliculaServiceImpl implements PeliculaService {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	public void altaPelicula(String director, String titulo, String fecha) throws SQLException {
 		
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
+		List<Integer> listaId = new ArrayList<Integer>();
+		
+		Query query = em.createQuery("SELECT MAX(p.id) FROM Pelicula p");
+		
+		listaId = query.getResultList();
+		
 		Pelicula p = new Pelicula();
+		p.setId(listaId.get(0) + 1);
 		p.setDirector(director);
 		p.setTitulo(titulo);
 		p.setFecha(fecha);
@@ -118,8 +130,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 	}
 
-	public void modificarPelicula(String director, String tituloPeli, String fecha, String titulo)
-			throws SQLException {
+	public void modificarPelicula(String director, String titulo, String fecha, String tituloPeli) throws SQLException {
 		
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
@@ -138,18 +149,15 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 	public void eliminarPelicula(String titulo) throws SQLException {
 
-		String message = null;
-
-		pst = con.prepareStatement("DELETE FROM pelicula WHERE titulo = ?");
-
-		pst.setString(1, titulo);
-
-		result = pst.executeUpdate();
-
-		if (result > 0) {
-			message = "Pelicula eliminada con exito.";
-		}
-
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		
+		Query query = em.createQuery("DELETE FROM Pelicula p WHERE p.titulo = :titulo");
+		query.setParameter("titulo", titulo);
+		
+		query.executeUpdate();
+		em.getTransaction( ).commit( );
+		
 	}
 
 	public TreeSet<String> listaDirectores() {

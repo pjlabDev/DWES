@@ -20,11 +20,11 @@
 					class="mt-5 table table-striped table-inverse table-responsive table-center table-bordered text-center">
 					<thead class="thead-inverse">
 						<tr>
-							<td>Director</td>
-							<td>Título</td>
-							<td>Fecha</td>
-							<td>Modificar</td>
-							<td>Eliminar</td>
+							<th>Director</th>
+							<th>Título</th>
+							<th>Fecha</th>
+							<th>Modificar</th>
+							<th>Eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -37,10 +37,20 @@
 								<td>${item.fecha}</td>
 								<td>
 									<form action="updateFormPeliculas" method="POST">
-										
-										<input type="text" name="tituloPeli" value="${item.titulo}" style="visibility:hidden">
-										<input type="submit" class="btn btn-success" value="Modificar">
-									
+										<input type="hidden" name="director" value="${item.director}">
+										<div style="align:center">
+											<input type="submit" class="btn btn-primary" value="Modificar">
+										</div>
+										<input type="hidden" name="fecha" value="${item.fecha}">
+										<input type="hidden" name="tituloPeli" value="${item.titulo}">
+									</form>
+								</td>
+								<td>
+									<form action="deletePeliculas" method="POST">
+										<input type="hidden" name="titulo" value="${item.titulo}">
+										<div style="align:center">
+											<input type="submit" class="btn btn-danger" value="Eliminar">
+										</div>
 									</form>
 								</td>
 							</tr>
@@ -54,13 +64,7 @@
 		<a href="formPeliculas"><button type="button" class="btn btn-primary">Añadir pelicula</button></a>
 		<br>
 		<br>
-		<a href="updateFormPeliculas"><button type="button" class="btn btn-primary">Modificar pelicula</button></a>
-		<br>
-		<br>
-		<a href="deleteFormPeliculas"><button type="button" class="btn btn-danger">Eliminar pelicula</button></a>
-		<br>
-		<br>
-		<a href="principal"><button type="button" class="btn btn-success">Inicio</button></a>
+		<a href="/"><button type="button" class="btn btn-success">Inicio</button></a>
 
 	</div>
 

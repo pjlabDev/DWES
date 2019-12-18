@@ -10,6 +10,7 @@ import java.util.TreeSet;
 
 import org.springframework.stereotype.Repository;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.pedro.modelo.Pelicula;
 import com.pedro.modelo.Usuario;
 import com.pedro.service.PeliculaServiceImpl;
@@ -45,7 +46,7 @@ public class PeliculaDaoImpl implements PeliculaDao {
 
 	}
 
-	public List<Pelicula> mostrarPelis() throws SQLException {
+	public List<Pelicula> mostrarPelis() throws SQLException{
 
 		listaPelis = new ArrayList<>();
 		
@@ -55,9 +56,9 @@ public class PeliculaDaoImpl implements PeliculaDao {
 
 	}
 
-	public void altaDirector(String director, String pass) throws SQLException {
+	public void altaUsuario(String director, String pass) throws SQLException, MySQLIntegrityConstraintViolationException {
 
-		pService.altaDirector(director, pass);
+		pService.altaUsuario(director, pass);
 	}
 
 	public void altaPelicula(String director, String titulo, String fecha) throws SQLException {
@@ -65,8 +66,7 @@ public class PeliculaDaoImpl implements PeliculaDao {
 		pService.altaPelicula(director, titulo, fecha);
 	}
 
-	public void modificarPelicula(String director, String tituloPeli, String fecha, String titulo)
-			throws SQLException {
+	public void modificarPelicula(String director, String tituloPeli, String fecha, String titulo) throws SQLException {
 
 		pService.modificarPelicula(director, tituloPeli, fecha, titulo);
 	}
@@ -85,7 +85,7 @@ public class PeliculaDaoImpl implements PeliculaDao {
 	}
 
 	@Override
-	public List<Usuario> mostrarUsuarios() throws SQLException {
+	public List<Usuario> mostrarUsuarios() throws SQLException{
 		List<Usuario> listaUsers = new ArrayList<>();
 
 		listaUsers = pService.mostrarUsuarios();

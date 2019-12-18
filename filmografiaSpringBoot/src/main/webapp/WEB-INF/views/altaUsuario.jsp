@@ -11,7 +11,7 @@
 
 	<div style="text-align:center">
 
-		<h2>Bienvenido al alta de Directores Admin.</h2>
+		<h2>Bienvenido al alta de Usuarios Admin.</h2>
 
 		<p>Rellenando el siguiente formulario podrás añadir un nuevo director administrador.</p>
 
@@ -23,6 +23,7 @@
 				<input class="form-control" type="text" name="username" placeholder="Nombre director" required>
 				<label>Contraseña</label>
 				<input class="form-control" type="password" name="password" placeholder="Contraseña" maxlength="10" required>
+				<p style="color:red">${message}</p>
 				<br>
 				<input type="submit" class="btn btn-success" value="Añadir director">
 			

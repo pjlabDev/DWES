@@ -12,7 +12,7 @@
 
 	<a href="consultarDirector"><button type="button" class="btn btn-warning">Volver</button></a>
 	
-	<a href="principal"><button type="button" class="btn btn-warning">Inicio</button></a>
+	<a href="/"><button type="button" class="btn btn-warning">Inicio</button></a>
 
 	<div style="text-align:center">
 

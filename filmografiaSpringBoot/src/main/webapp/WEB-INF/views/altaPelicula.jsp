@@ -27,7 +27,7 @@
 				<input class="form-control" type="text" name="fecha" placeholder="YYYY-MM-DD" required>
 				<small class="form-text text-muted">Formato de fecha YYYY-MM-DD</small>
 				<br>
-				<input class="btn btn-success" type="submit" value="Anadir pelicula">
+				<input class="btn btn-success" type="submit" value="Añadir pelicula">
 				
 			</div>
 		

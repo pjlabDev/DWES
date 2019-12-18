@@ -45,7 +45,7 @@
 			<b>Desea consultar otro director?</b>
 		<br>
 		
-			<a href="consultaDirector"><button type="button" class="btn btn-success">Si</button></a>
+		<a href="consultaDirector"><button type="button" class="btn btn-success">Si</button></a>
 		
 		<br>
 		<br>

@@ -19,15 +19,18 @@ public class Pelicula implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private String director;
-	
 	@Id
+	private int id;
+	
+	private String director;
+
 	private String titulo;
 	
 	private String fecha;
 
-	public Pelicula(String director, String titulo, String fecha) {
+	public Pelicula(int id, String director, String titulo, String fecha) {
 		
+		this.id = id;
 		this.director = director;
 		this.titulo = titulo;
 		this.fecha = fecha;
@@ -62,4 +65,12 @@ public class Pelicula implements Serializable{
 		this.fecha = fecha;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 }
