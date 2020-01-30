@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ include file="/WEB-INF/views/include.jsp"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -17,10 +17,11 @@
 		<div class="row justify-content-center">
 			<div class="col-auto">
 				<table class="mt-5 table table-striped table-inverse table-responsive table-center table-bordered text-center">
+					<caption>Listado Usuarios 2019</caption>
 					<thead class="thead-inverse">
 						<tr>
-							<th>Nombre</th>
-							<th>Password</th>
+							<th id="nombre">Nombre</th>
+							<th id="password">Password</th>
 						</tr>
 					</thead>
 					<tbody>

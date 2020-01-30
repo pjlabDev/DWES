@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -27,14 +27,15 @@
 			<div class="col-auto">
 				<table
 					class="mt-5 table table-striped table-inverse table-responsive table-center table-bordered text-center">
+					<caption>Listado de Peliculas de todos los tiempos</caption>
 					<thead class="thead-inverse">
 						<tr>
-							<th>Director</th>
-							<th>Título</th>
-							<th>Fecha</th>
-							<th>Calificacion</th>
-							<th>Modificar</th>
-							<th>Eliminar</th>
+							<th id="director">Director</th>
+							<th id="titulo">Título</th>
+							<th id="fecha">Fecha</th>
+							<th id="calificacion">Calificacion</th>
+							<th id="modificar">Modificar</th>
+							<th id="eliminar">Eliminar</th>
 						</tr>
 					</thead>
 					<tbody>

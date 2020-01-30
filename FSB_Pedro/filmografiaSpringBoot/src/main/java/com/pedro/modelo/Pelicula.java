@@ -46,7 +46,7 @@ public class Pelicula implements Serializable {
 	}
 
 	public Pelicula() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public String getDirector() {

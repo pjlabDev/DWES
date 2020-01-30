@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"crossorigin="anonymous">
@@ -24,9 +24,10 @@
 			<div class="col-auto">
 				<table
 					class="mt-5 table table-striped table-inverse table-responsive table-center table-bordered text-center">
+					<caption>Lista Directores Consultados</caption>
 					<thead class="thead-inverse">
 						<tr>
-							<th>Directores Consultados</th>
+							<th id="directores">Directores Consultados</th>
 						</tr>
 					</thead>
 					<tbody>

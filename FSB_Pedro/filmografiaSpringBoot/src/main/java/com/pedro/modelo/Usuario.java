@@ -22,16 +22,16 @@ public class Usuario {
 
 	private String apellidos;
 
-	private String usuario;
+	private String user;
 
 	private String password;
 
-	public Usuario(int id, String nombre, String apellidos, String usuario, String password) {
+	public Usuario(int id, String nombre, String apellidos, String user, String password) {
 
 		this.id = id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
-		this.usuario = usuario;
+		this.user = user;
 		this.password = password;
 
 	}
@@ -72,12 +72,12 @@ public class Usuario {
 		this.apellidos = apellidos;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getUser() {
+		return user;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 }

@@ -16,17 +16,17 @@ import javax.persistence.Table;
 public class Pelusua {
 
 	@Id
-	private int IDPelicula;
+	private int iDPelicula;
 	
-	private int IDUsuario;
+	private int iDUsuario;
 	
-	private int Calificacion;
+	private int calificacion;
 
 	public Pelusua(int idPelicula, int idUsuario, int calificacion) {
 
-		this.IDPelicula = idPelicula;
-		this.IDUsuario = idUsuario;
-		this.Calificacion = calificacion;
+		this.iDPelicula = idPelicula;
+		this.iDUsuario = idUsuario;
+		this.calificacion = calificacion;
 
 	}
 	
@@ -35,27 +35,27 @@ public class Pelusua {
 	}
 
 	public int getIdPelicula() {
-		return IDPelicula;
+		return iDPelicula;
 	}
 
 	public void setIdPelicula(int idPelicula) {
-		this.IDPelicula = idPelicula;
+		this.iDPelicula = idPelicula;
 	}
 
 	public int getIdUsuario() {
-		return IDUsuario;
+		return iDUsuario;
 	}
 
 	public void setIdUsuario(int idUsuario) {
-		this.IDUsuario = idUsuario;
+		this.iDUsuario = idUsuario;
 	}
 
 	public int getCalificacion() {
-		return Calificacion;
+		return calificacion;
 	}
 
 	public void setCalificacion(int calificacion) {
-		this.Calificacion = calificacion;
+		this.calificacion = calificacion;
 	}
 
 }

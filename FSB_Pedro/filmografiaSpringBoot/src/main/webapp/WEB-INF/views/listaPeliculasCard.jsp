@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -33,9 +33,9 @@
 				<div class="card" style="width: 18rem; margin-right: 6px; margin-top: 6px;" class="col-6 col-md-4 col-lg-3">
 				<img class="card-img-top" src="${item.foto}" alt="Card image cap" width="120px" height="180px">
 					<ul class="list-group list-group-flush">
-					<div class="card-header"><b>Titulo:</b> ${item.titulo}</div>
-						<li class="list-group-item"><b>Director:</b> ${item.director}</li>
-						<li class="list-group-item"><b>Fecha:</b> ${item.fecha}</li>
+					<div class="card-header"><strong>Titulo:</strong> ${item.titulo}</div>
+						<li class="list-group-item"><strong>Director:</strong> ${item.director}</li>
+						<li class="list-group-item"><strong>Fecha:</strong> ${item.fecha}</li>
 						<li class="list-group-item">
 						<form action="moreInfo" method="POST" accept-charset="UTF-8">
 							<input type="hidden" name="director" value="${item.director}">

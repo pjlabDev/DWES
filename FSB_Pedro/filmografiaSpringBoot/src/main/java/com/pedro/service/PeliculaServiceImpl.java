@@ -4,8 +4,8 @@
 package com.pedro.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.persistence.EntityManager;
@@ -14,8 +14,8 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.table.DefaultTableModel;
 
-import com.pedro.modelo.Pelusua;
 import com.pedro.modelo.Pelicula;
+import com.pedro.modelo.Pelusua;
 import com.pedro.modelo.Usuario;
 
 /**
@@ -24,7 +24,7 @@ import com.pedro.modelo.Usuario;
  */
 public class PeliculaServiceImpl implements PeliculaService {
 
-	TreeSet<String> listaDirectores = new TreeSet<>();
+	Set<String> listaDirectores = new TreeSet<>();
 	Pelicula p = new Pelicula();
 	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Eclipselink_JPA");
 	DefaultTableModel model;
@@ -37,10 +37,10 @@ public class PeliculaServiceImpl implements PeliculaService {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 		
-		Query query = em.createQuery("SELECT p FROM Pelicula p WHERE p.director = :director", Pelicula.class);
-		query.setParameter("director", director);
+		Query query = em.createQuery("SELECT p FROM Pelicula p WHERE p.director = :dir", Pelicula.class);
+		query.setParameter("dir", director);
 
 		listaPelis = query.getResultList();
 		
@@ -59,9 +59,9 @@ public class PeliculaServiceImpl implements PeliculaService {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		List<Usuario> listaUser = new ArrayList<Usuario>();
+		List<Usuario> listaUser;
 		
-		Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.password = :password", Usuario.class);
+		Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.user = :usuario AND u.password = :password", Usuario.class);
 		query.setParameter("usuario", usuario);
 		query.setParameter("password", password);
 		
@@ -78,7 +78,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 		
 		Query query = em.createQuery("SELECT p FROM Pelicula p", Pelicula.class);
 
@@ -95,7 +95,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		List<Integer> listaId = new ArrayList<Integer>();
+		List<Integer> listaId;
 		
 		Query query = em.createQuery("SELECT MAX(u.id) FROM Usuario u");
 		
@@ -105,7 +105,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 		u.setId(listaId.get(0) + 1);
 		u.setNombre(nombre);
 		u.setApellidos(apellidos);
-		u.setUsuario(usuario);
+		u.setUser(usuario);
 		u.setPassword(pass);
 		
 		em.persist(u);
@@ -120,21 +120,21 @@ public class PeliculaServiceImpl implements PeliculaService {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		List<Integer> listaId = new ArrayList<Integer>();
+		List<Integer> listaId;
 		
 		Query query = em.createQuery("SELECT MAX(p.id) FROM Pelicula p");
 		
 		listaId = query.getResultList();
 		
-		Pelicula p = new Pelicula();
-		p.setId(listaId.get(0) + 1);
-		p.setDirector(director);
-		p.setTitulo(titulo);
-		p.setFecha(fecha);
-		p.setDescripcion(descripcion);
-		p.setFoto(foto);
+		Pelicula pel = new Pelicula();
+		pel.setId(listaId.get(0) + 1);
+		pel.setDirector(director);
+		pel.setTitulo(titulo);
+		pel.setFecha(fecha);
+		pel.setDescripcion(descripcion);
+		pel.setFoto(foto);
 		
-		em.persist(p);
+		em.persist(pel);
 		em.getTransaction( ).commit( );
 
 	}
@@ -146,11 +146,11 @@ public class PeliculaServiceImpl implements PeliculaService {
 		em.getTransaction().begin();
 		
 		Query query = em.createQuery("UPDATE Pelicula p "
-				+ "SET p.director = :director, p.titulo = :titulo, p.fecha = :fecha, p.foto = :foto, "
+				+ "SET p.director = :director, p.titulo = :tituloOriginal, p.fecha = :fecha, p.foto = :foto, "
 				+ "p.descripcion = :descripcion WHERE p.titulo = :tituloPeli");
 		
 		query.setParameter("director", director);
-		query.setParameter("titulo", titulo);
+		query.setParameter("tituloOriginal", titulo);
 		query.setParameter("fecha", fecha);
 		query.setParameter("foto",foto);
 		query.setParameter("descripcion", descripcion);
@@ -175,7 +175,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 		
 	}
 
-	public TreeSet<String> listaDirectores() {
+	public Set<String> listaDirectores() {
 
 		return listaDirectores;
 
@@ -188,7 +188,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		List<Usuario> listaUsers = new ArrayList<>();
+		List<Usuario> listaUsers;
 		
 		Query query = em.createQuery("SELECT u FROM Usuario u");
 		
@@ -204,7 +204,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 		
 		Query query = em.createQuery("SELECT p FROM Pelicula p WHERE p.director = :director OR p.titulo = :titulo", Pelicula.class);
 		query.setParameter("director", director);
@@ -218,15 +218,15 @@ public class PeliculaServiceImpl implements PeliculaService {
 	@SuppressWarnings("unchecked")
 	public String calificarPeli(int idPelicula, int idUsuario, int calificacion) throws SQLException {
 		
-		List<Pelusua> lista = new ArrayList<Pelusua>();
+		List<Pelusua> lista;
 		
-		List<Double> result = new ArrayList<Double>();
+		List<Double> result;
 		
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		Query query = em.createQuery("SELECT p FROM Pelusua p WHERE p.IDPelicula = :idPelicula AND p.IDUsuario = :idUsuario", Pelusua.class);
-		query.setParameter("idPelicula", idPelicula);
+		Query query = em.createQuery("SELECT p FROM Pelusua p WHERE p.iDPelicula = :idP AND p.iDUsuario = :idUsuario", Pelusua.class);
+		query.setParameter("idP", idPelicula);
 		query.setParameter("idUsuario", idUsuario);
 		
 		lista = query.getResultList();
@@ -240,7 +240,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 			
 			em.persist(c);
 			
-			Query query2 = em.createQuery("SELECT AVG(p.Calificacion) FROM Pelusua p WHERE p.IDPelicula = :idPelicula", Double.class);
+			Query query2 = em.createQuery("SELECT AVG(p.calificacion) FROM Pelusua p WHERE p.iDPelicula = :idPelicula", Double.class);
 			query2.setParameter("idPelicula", idPelicula);
 			
 			result = query2.getResultList();
@@ -271,12 +271,12 @@ public class PeliculaServiceImpl implements PeliculaService {
 	@SuppressWarnings("unchecked")
 	public List<Integer> sacarIDUser(String usuario) {
 		
-		List<Integer> id = new ArrayList<Integer>();
+		List<Integer> id;
 		
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		
-		Query query = em.createQuery("SELECT u.id FROM Usuario u WHERE u.usuario = :usuario", Integer.class);
+		Query query = em.createQuery("SELECT u.id FROM Usuario u WHERE u.user = :usuario", Integer.class);
 		query.setParameter("usuario", usuario);
 		
 		id = query.getResultList();

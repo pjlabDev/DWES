@@ -6,13 +6,14 @@ package com.pedro.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pedro.modelo.Pelicula;
@@ -27,12 +28,19 @@ import com.pedro.repository.PeliculaDaoImpl;
 @Controller
 @EnableAutoConfiguration
 public class HomeController {
-
-	TreeSet<String> listaDirectores = new TreeSet<>();
+	
+	String user = "usuario";
+	String mensaje = "message";
+	String ventanaMantenimientoPeliculas = "mantenimientoPeliculas";
+	String listaDePeliculas = "listaPelis";
+	String listaDePeliculasCard = "listaPeliculasCard";
+	String errorPage = "errorPageToPelis";
+	String directorBD = "director";
+	Set<String> listaDirectores = new TreeSet<>();
 	PeliculaDaoImpl peliculaDao = new PeliculaDaoImpl();
 
 //	Método que lleva a la página principal, dejando vacia la lista de directores consultados.
-	@RequestMapping("/")
+	@GetMapping(path = "/")
 	public String irPrincipal(ModelMap mp) {
 
 		listaDirectores.clear();
@@ -41,38 +49,37 @@ public class HomeController {
 	}
 
 //	Éste método nos devuelve una lista de las peliculas que tiene un director, consultado anteriormente.
-	@RequestMapping(value = "/consultar", method = RequestMethod.POST)
+	@PostMapping(path = "/consultar")
 	public String listaPeliculasDirector(@RequestParam("director") String director, ModelMap mp) {
 
 		String message = null;
 
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 
 		try {
 
 			listaPelis = peliculaDao.mostrarPeliculasDirector(director);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return "errorPageToPelis";
+			return errorPage;
 		}
 
 		if (listaPelis.isEmpty()) {
 			message = "No existe ningún director con ese nombre en la base de datos.";
-			mp.put("message", message);
+			mp.put(mensaje, message);
 			return "consultaDirector";
 
 		}
 
-		mp.put("listaPelis", listaPelis);
-		mp.put("director", director);
+		mp.put(listaDePeliculas, listaPelis);
+		mp.put(directorBD, director);
 
 		return "listadoPeliculas";
 	}
 
 //	Login de usuarios administradores.
-	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
-	public String Login(@RequestParam("usuario") String usuario, @RequestParam("password") String password,
+	@PostMapping(path = "/loginUser")
+	public String login(@RequestParam("usuario") String usuario, @RequestParam("password") String password,
 			ModelMap mp) {
 
 		String message = null;
@@ -84,28 +91,27 @@ public class HomeController {
 			listaUser = peliculaDao.loginDirector(usuario, password);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return "errorPageToPelis";
+			return errorPage;
 		}
 
 		if (listaUser.isEmpty()) {
 			message = "Usuario no encontrado en la base de datos.";
-			mp.put("message", message);
+			mp.put(mensaje, message);
 			return "login";
 
 		}
 		
-		mp.put("usuario", usuario);
+		mp.put(user, usuario);
 		
 		return "welcomeUser";
 	}
 
 //	Alta de usuarios administradores.
-	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
+	@PostMapping(path = "/addUser")
 	public String addUser(@RequestParam("nombre") String nombre, @RequestParam("apellidos") String apellidos,
 			@RequestParam("username") String username, @RequestParam("password") String password, ModelMap mp) {
 		
-		List<Usuario> listaUsers = new ArrayList<Usuario>();
+		List<Usuario> listaUsers;
 
 		try {
 
@@ -114,8 +120,7 @@ public class HomeController {
 			listaUsers = peliculaDao.mostrarUsuarios();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return "errorPageToPelis";
+			return errorPage;
 		}
 
 		mp.put("listaUsers", listaUsers);
@@ -125,34 +130,33 @@ public class HomeController {
 	}
 
 //	Método que nos dirige a Mantenimiento de peliculas, mostrando un listado completo de las peliculas con toda su información
-	@RequestMapping(value = "/MantenimientoPelicula")
+	@PostMapping(path = "/MantenimientoPelicula")
 	public String mantPelis(@RequestParam("usuario") String usuario, ModelMap mp) {
 
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 
 		try {
 
 			listaPelis = peliculaDao.mostrarPelis();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return "errorPageToPelis";
+			return errorPage;
 		}
 		
-		mp.put("usuario", usuario);
-		mp.put("listaPelis", listaPelis);
+		mp.put(user, usuario);
+		mp.put(listaDePeliculas, listaPelis);
 
-		return "mantenimientoPeliculas";
+		return ventanaMantenimientoPeliculas;
 
 	}
 
 //	Alta de nuevas peliculas
-	@RequestMapping(value = "/addPeliculas", method = RequestMethod.POST)
+	@PostMapping(value = "/addPeliculas")
 	public String addPeliculas(@RequestParam("director") String director, @RequestParam("titulo") String titulo,
 			@RequestParam("fecha") String fecha, @RequestParam("foto") String foto, 
 			@RequestParam("descripcion") String descripcion, @RequestParam("usuario") String usuario, ModelMap mp) {
 
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 
 		try {
 
@@ -161,24 +165,23 @@ public class HomeController {
 			listaPelis = peliculaDao.mostrarPelis();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return "errorPageToPelis";
+			return errorPage;
 		}
 		
-		mp.put("usuario", usuario);
-		mp.put("listaPelis", listaPelis);
+		mp.put(user, usuario);
+		mp.put(listaDePeliculas, listaPelis);
 
-		return "mantenimientoPeliculas";
+		return ventanaMantenimientoPeliculas;
 
 	}
 
 //	Metodo que nos permite modificar la información de las peliculas.
-	@RequestMapping(value = "/updatePeliculas", method = RequestMethod.POST)
+	@PostMapping(path = "/updatePeliculas")
 	public String updatePeliculas(@RequestParam("director") String director, @RequestParam("titulo") String titulo,
 			@RequestParam("fecha") String fecha, @RequestParam("tituloPeli") String tituloPeli, @RequestParam("foto") String foto, 
 			@RequestParam("descripcion") String descripcion, @RequestParam("usuario") String usuario, ModelMap mp) {
 
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 
 		try {
 
@@ -186,22 +189,21 @@ public class HomeController {
 			listaPelis = peliculaDao.mostrarPelis();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return "errorPageToPelis";
+			return errorPage;
 		}
 
-		mp.put("listaPelis", listaPelis);
-		mp.put("usuario", usuario);
+		mp.put(listaDePeliculas, listaPelis);
+		mp.put(user, usuario);
 
-		return "mantenimientoPeliculas";
+		return ventanaMantenimientoPeliculas;
 
 	}
 
 //	Metodo del controlador que se utiliza para borrar peliculas en base de datos.
-	@RequestMapping(value = "/deletePeliculas", method = RequestMethod.POST)
+	@PostMapping(path = "/deletePeliculas")
 	public String deletePeliculas(@RequestParam("titulo") String titulo, @RequestParam("usuario") String usuario, ModelMap mp) {
 
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 
 		try {
 
@@ -209,24 +211,23 @@ public class HomeController {
 			listaPelis = peliculaDao.mostrarPelis();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return "errorPageToPelis";
+			return errorPage;
 		}
 
-		mp.put("listaPelis", listaPelis);
-		mp.put("usuario", usuario);
+		mp.put(listaDePeliculas, listaPelis);
+		mp.put(user, usuario);
 
-		return "mantenimientoPeliculas";
+		return ventanaMantenimientoPeliculas;
 
 	}
 	
 //	Metodo que muestra mas informacion en sobre las peliculas.
-	@RequestMapping(value = "/moreInfo", method = RequestMethod.POST)
+	@PostMapping(path = "/moreInfo")
 	public String moreInfo(@RequestParam("titulo") String titulo, @RequestParam("director") String director,
 			@RequestParam("fecha") String fecha, @RequestParam("descripcion") String descripcion, 
 			@RequestParam("foto") String foto, ModelMap mp){
 		
-		mp.put("director",director);
+		mp.put(directorBD,director);
 		mp.put("titulo", titulo);
 		mp.put("fecha", fecha);
 		mp.put("descripcion", descripcion);
@@ -238,7 +239,7 @@ public class HomeController {
 	}
 
 //	Muestra una lista con los directores que hemos consultado.
-	@RequestMapping(value = "/listaDirectoresConsultados")
+	@GetMapping(path = "/listaDirectoresConsultados")
 	public String listaDirectores(ModelMap mp) {
 
 		listaDirectores = peliculaDao.listaDirectores();
@@ -249,51 +250,49 @@ public class HomeController {
 
 	}
 	
-	@RequestMapping(value = "/buscarPelis", method = RequestMethod.POST)
+	@PostMapping(path = "/buscarPelis")
 	public String buscarPelis(@RequestParam("filtro") String titulo, @RequestParam("filtro") String director, ModelMap mp) {
 		
 		String message = null;
 
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 
 		try {
 
 			listaPelis = peliculaDao.buscarPelis(titulo, director);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return "errorPageToPelis";
+			return errorPage;
 		}
 
 		if (listaPelis.isEmpty()) {
 			message = "No hemos podido encontrar la pelicula.";
-			mp.put("message", message);
+			mp.put(mensaje, message);
 			
 			try {
 				listaPelis = peliculaDao.mostrarPelis();
 				
-				mp.put("listaPelis", listaPelis);
+				mp.put(listaDePeliculas, listaPelis);
 						
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				return "errorPageToPelis";
+				return errorPage;
 			}
 			
-			return "listaPeliculasCard";
+			return listaDePeliculasCard;
 
 		}
 
-		mp.put("listaPelis", listaPelis);
+		mp.put(listaDePeliculas, listaPelis);
 
-		return "listaPeliculasCard";
+		return listaDePeliculasCard;
 		
 	}
 	
-	@RequestMapping(value = "/calificarPelis", method = RequestMethod.POST)
+	@PostMapping(path = "/calificarPelis")
 	public String calificarPeli(@RequestParam("idUsuario") int idUsuario, @RequestParam("idPelicula") int idPelicula, 
 			@RequestParam("calificacion") int calificacion, ModelMap mp) {
 		
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 		String message = null;
 		
 		try {
@@ -302,49 +301,42 @@ public class HomeController {
 			listaPelis = peliculaDao.mostrarPelis();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return errorPage;
 		}
 		
 		if(message.equalsIgnoreCase("Pelicula calificada")) {
 			
-			mp.put("listaPelis", listaPelis);
+			mp.put(listaDePeliculas, listaPelis);
 			
-			return "mantenimientoPeliculas";
+			return ventanaMantenimientoPeliculas;
 			
 		}else {
 			
-			mp.put("listaPelis", listaPelis);
+			mp.put(listaDePeliculas, listaPelis);
 			mp.put("id", idUsuario);
-			mp.put("message", message);
+			mp.put(mensaje, message);
 			return "calificacion";
 			
 		}
 		
 	}
 	
-	@RequestMapping(value = "/sacarId", method = RequestMethod.POST)
+	@PostMapping(path = "/sacarId")
 	public String sacarID(@RequestParam("usuario") String usuario, ModelMap mp) {
 		
-		List<Integer> id = new ArrayList<Integer>();
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Integer> id;
+		List<Pelicula> listaPelis;
 		
 		try {
 			
 			listaPelis = peliculaDao.mostrarPelis();
 			id = peliculaDao.sacarIDUser(usuario);
-			
-			for (Integer integer : id) {
 				
-				integer = id.get(0);
-				mp.put("id", integer);
-			}
-			
-			mp.put("listaPelis", listaPelis);
+			mp.put("id", id.get(0));
+			mp.put(listaDePeliculas, listaPelis);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return errorPage;
 		}
 		
 		return "calificacion";
@@ -360,39 +352,39 @@ public class HomeController {
 	
 	//Metodos para cambiar de pestañas.
 
-	@RequestMapping("/infoPage")
+	@GetMapping(path = "/infoPage")
 	public String infoPage() {
 		return "infoPage";
 	}
 
-	@RequestMapping("/consultaDirector")
+	@GetMapping(path = "/consultaDirector")
 	public String consultaDirector() {
 		return "consultaDirector";
 	}
 
-	@RequestMapping("/loginPage")
+	@GetMapping(path = "/loginPage")
 	public String irLoginPage() {
 		return "login";
 	}
 	
-	@RequestMapping("/volverwelcome")
+	@PostMapping(path = "/volverwelcome")
 	public String welcomeUser(@RequestParam("usuario") String usuario, ModelMap mp) {
 		
-		mp.put("usuario", usuario);
+		mp.put(user, usuario);
 		
 		return "welcomeUser";
 		
 	}
 
-	@RequestMapping(value = "/addFormUser")
+	@PostMapping(path = "/addFormUser")
 	public String iraddUserPage(@RequestParam("usuario") String usuario, ModelMap mp) {
 
-		mp.put("usuario", usuario);
+		mp.put(user, usuario);
 		
 		return "altaUsuario";
 	}
 
-	@RequestMapping(value = "/formPeliculas")
+	@PostMapping(path = "/formPeliculas")
 	public String irformPeliculas() {
 
 		return "altaPelicula";
@@ -400,50 +392,48 @@ public class HomeController {
 	
 	//Este metodo me cambia a la pestaña de modificarPelicula junto con los datos de la pelicula, para poder
 	//proceder a modificarla.
-	@RequestMapping(value = "/updateFormPeliculas")
+	@PostMapping(path = "/updateFormPeliculas")
 	public String updateFormPeliculas(@RequestParam("tituloPeli") String tituloPeli,
 			@RequestParam("director") String director, @RequestParam("fecha") String fecha, @RequestParam("foto") String foto,
 			@RequestParam("descripcion") String descripcion, @RequestParam("usuario") String usuario, ModelMap mp) {
 
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 
 		try {
 
 			listaPelis = peliculaDao.mostrarPelis();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return "errorPageToPelis";
+			return errorPage;
 		}
 
-		mp.put("listaPelis", listaPelis);
-		mp.put("director", director);
+		mp.put(listaDePeliculas, listaPelis);
+		mp.put(directorBD, director);
 		mp.put("fecha", fecha);
 		mp.put("foto",foto);
 		mp.put("descripcion",descripcion);
 		mp.put("tituloPeli", tituloPeli);
-		mp.put("usuario", usuario);
+		mp.put(user, usuario);
 		
 		return "modificarPelicula";
 	}
 	
-	@RequestMapping(value = "/cartelera")
+	@GetMapping(path = "/cartelera")
 	public String cartelera(ModelMap mp) {
 		
-		List<Pelicula> listaPelis = new ArrayList<Pelicula>();
+		List<Pelicula> listaPelis;
 
 		try {
 
 			listaPelis = peliculaDao.mostrarPelis();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			return "errorPageToPelis";
+			return errorPage;
 		}
 
-		mp.put("listaPelis", listaPelis);
+		mp.put(listaDePeliculas, listaPelis);
 		
-		return "listaPeliculasCard";
+		return listaDePeliculasCard;
 		
 	}
 

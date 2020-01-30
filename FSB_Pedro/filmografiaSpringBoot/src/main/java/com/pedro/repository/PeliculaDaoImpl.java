@@ -6,11 +6,11 @@ package com.pedro.repository;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.springframework.stereotype.Repository;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.pedro.modelo.Pelicula;
 import com.pedro.modelo.Usuario;
 import com.pedro.service.PeliculaServiceImpl;
@@ -20,13 +20,13 @@ import com.pedro.service.PeliculaServiceImpl;
  *
  */
 @Repository("peliculaDao")
-public class PeliculaDaoImpl implements PeliculaDao {
+public class PeliculaDaoImpl {
 
 	PeliculaServiceImpl pService = new PeliculaServiceImpl();
 	List<Pelicula> listaPelis;
-	TreeSet<String> listaDirectores = new TreeSet<>();
+	Set<String> listaDirectores = new TreeSet<>();
 
-	@Override
+
 	public List<Pelicula> mostrarPeliculasDirector(String director) throws SQLException {
 
 		listaPelis = new ArrayList<>();
@@ -37,10 +37,10 @@ public class PeliculaDaoImpl implements PeliculaDao {
 
 	}
 
-	@Override
+
 	public List<Usuario> loginDirector(String nombre, String password) throws SQLException {
 
-		List<Usuario> listaUser = new ArrayList<>();
+		List<Usuario> listaUser;
 
 		listaUser = pService.loginDirector(nombre, password);
 
@@ -48,7 +48,7 @@ public class PeliculaDaoImpl implements PeliculaDao {
 
 	}
 
-	@Override
+
 	public List<Pelicula> mostrarPelis() throws SQLException{
 
 		listaPelis = new ArrayList<>();
@@ -59,32 +59,32 @@ public class PeliculaDaoImpl implements PeliculaDao {
 
 	}
 
-	@Override
-	public void altaUsuario(String nombre, String apellidos, String usuario, String pass) throws SQLException, MySQLIntegrityConstraintViolationException {
+
+	public void altaUsuario(String nombre, String apellidos, String usuario, String pass) throws SQLException {
 
 		pService.altaUsuario(nombre, apellidos, usuario, pass);
 	}
 
-	@Override
+
 	public void altaPelicula(String director, String titulo, String fecha, String foto, String descripcion) throws SQLException {
 
 		pService.altaPelicula(director, titulo, fecha, foto, descripcion);
 	}
 
-	@Override
+
 	public void modificarPelicula(String director, String tituloPeli, String fecha, String titulo, String foto, String descripcion) throws SQLException {
 
 		pService.modificarPelicula(director, tituloPeli, fecha, titulo, foto, descripcion);
 	}
 
-	@Override
+
 	public void eliminarPelicula(String titulo) throws SQLException {
 		
 		pService.eliminarPelicula(titulo);
 	}
 
-	@Override
-	public TreeSet<String> listaDirectores() {
+	
+	public Set<String> listaDirectores() {
 	
 		listaDirectores = pService.listaDirectores();
 		
@@ -92,16 +92,16 @@ public class PeliculaDaoImpl implements PeliculaDao {
 
 	}
 
-	@Override
+
 	public List<Usuario> mostrarUsuarios() throws SQLException{
-		List<Usuario> listaUsers = new ArrayList<>();
+		List<Usuario> listaUsers;
 
 		listaUsers = pService.mostrarUsuarios();
 
 		return listaUsers;
 	}
 
-	@Override
+
 	public List<Pelicula> buscarPelis(String titulo, String director) throws SQLException {
 		
 		listaPelis = new ArrayList<>();
@@ -111,7 +111,7 @@ public class PeliculaDaoImpl implements PeliculaDao {
 		return listaPelis;
 	}
 
-	@Override
+
 	public String calificarPeli(int idPelicula, int idUsuario, int calificacion) throws SQLException {
 		
 		String message;
@@ -121,10 +121,10 @@ public class PeliculaDaoImpl implements PeliculaDao {
 		return message;
 	}
 
-	@Override
-	public List<Integer> sacarIDUser(String usuario) throws SQLException {
+
+	public List<Integer> sacarIDUser(String usuario) {
 		
-		List<Integer> id = new ArrayList<Integer>();
+		List<Integer> id;
 		
 		id = pService.sacarIDUser(usuario);
 		
