@@ -50,6 +50,7 @@
 									<td>${item.stock}</td>
 									<td>${item.categoria}</td>
 									<form action="productosC" method="POST" accept-charset="UTF-8">
+										<input type="hidden" name="codProd" value="${item.codProd}">
 										<input type="hidden" name="codCat" value="${codCat}">
 										<input type="hidden" name="nombre" value="${item.nombre}">
 										<input type="hidden" name="descripcion" value="${item.descripcion}">

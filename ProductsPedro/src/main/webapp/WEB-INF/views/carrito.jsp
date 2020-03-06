@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +12,6 @@
 
 	<nav class="navbar navbar-expand-sm navbar-light bg-light nav-tabs">
 			<div class="navbar-brand col-md-3">
-				<form action="categoria" method="POST">
-					<input type="submit" class="btn btn-warning" value="Volver">
-				</form>
 			</div>
 			<h1 style="text-align:center" class="col-md-6">Carrito</h1>
         </nav>
@@ -31,18 +29,22 @@
 							<th id="descripcion">Descripcion</th>
 							<th id="peso">Peso</th>
 							<th id="categoria">Unidades</th>
-							<th id="comprar">Eliminar</th>
+							<th id="comprar">U a eliminar</th>
+							<th id="eliminar">Eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${listaCarr}" var="item">
+						<c:forEach items="${carrito}" var="item">
 								<tr>
+									<td>${item.codProd}</td>
 									<td>${item.nombre}</td>
 									<td>${item.descripcion}</td>
 									<td>${item.peso}</td>
 									<td>${item.unidades}</td>
-									<form action="carrito" method="POST" accept-charset="UTF-8">
-										<td><input type="button" class="btn btn-danger" value="Eliminar"></td>
+									<form action="eliminar" method="POST" accept-charset="UTF-8">
+										<input type="hidden" name="codProd" value="${item.codProd}">
+										<td><input type="number" name="unidadesNuevas" min=1 max="${item.unidades}"></td>
+										<td><input type="submit" class="btn btn-danger" value="Eliminar"></td>
 									</form>
 								</tr>							
 						</c:forEach>
@@ -50,7 +52,9 @@
 				</table>
 			</div>
 		</div>
+		<div style="text-align:center;">
+			<a href="/pedidoRealizado"><button type="button" class="btn btn-primary">Realizar pedido</button></a>
+		</div>
 	</div>
-
 </body>
 </html>

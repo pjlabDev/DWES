@@ -11,7 +11,6 @@
 	
 	<nav class="navbar navbar-expand-sm navbar-light bg-light nav-tabs">
 			<div class="navbar-brand col-md-3">
-				<a href="/"><button type="button" class="btn btn-warning">Volver</button></a>
 			</div>
 			<h1 style="text-align:center" class="col-md-6">Log In</h1>
         </nav>

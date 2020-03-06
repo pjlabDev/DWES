@@ -41,7 +41,8 @@ public class HomeController {
 	String directorBD = "director";
 	Set<String> listaDirectores = new TreeSet<>();
 	ProductRepository productR = new ProductRepository();
-	ProductServiceImpl pService = new ProductServiceImpl();
+	ProductServiceImpl ps = new ProductServiceImpl();
+	List<Carrito> listaCarr = new ArrayList<>();
 
 
 	@GetMapping(path = "/")
@@ -110,20 +111,21 @@ public class HomeController {
 	}
 	
 	@PostMapping(path = "/productosC")
-	public String addCarrito(@RequestParam("codCat") int codCat, @RequestParam("nombre") String nombre, @RequestParam("descripcion") String descripcion,
+	public String addCarrito(@RequestParam("codCat") int codCat, @RequestParam("codProd") Integer codProd,
+			@RequestParam("nombre") String nombre, @RequestParam("descripcion") String descripcion,
 			@RequestParam("peso") String peso, @RequestParam("unidades") String unidades, ModelMap mp) {
 		
 		List<Productos> listaProd = new ArrayList<>();
 		
 		try {
 			
-			listaProd = pService.mostrarProductosxCat(codCat);
+			listaProd = productR.mostrarProductosxCat(codCat);
 			
 		} catch (SQLException e) {
 			return errorPage;
 		}
 		
-		pService.agregarCarrito(nombre, descripcion, Double.parseDouble(peso), Integer.parseInt(unidades));
+		ps.agregarCarrito(codProd, nombre, descripcion, Double.parseDouble(peso), Integer.parseInt(unidades));
 		
 		mp.put("listaProd", listaProd);
 		
@@ -133,13 +135,35 @@ public class HomeController {
 	@GetMapping(path = "/carrito")
 	public String verCarrito(ModelMap mp) {
 		
-		List<Carrito> listaCarr = new ArrayList<>();
-		
-		listaCarr = pService.verCarrito();
+		listaCarr.addAll(ps.verCarrito());
 		
 		mp.put("carrito", listaCarr);
 		
-		return "carrito";	
+		return "carrito";
+	}
+	
+	@PostMapping(path = "/eliminar")
+	public String eliminarUnidad(@RequestParam("codProd") Integer codProd, @RequestParam("unidadesNuevas") String unidadesNuevas,
+			ModelMap mp) {
+		
+		for (Carrito carrito : listaCarr) {
+			
+			if(carrito.getCodProd() == codProd) {
+				carrito.setUnidades(carrito.getUnidades() - Integer.parseInt(unidadesNuevas));
+			}
+		}
+		
+		mp.put("carrito", listaCarr);
+		
+		
+		return "carrito";
+	}
+	
+	@GetMapping(path = "/pedidoRealizado")
+	public String realizarPedido() {
+		
+		return "pedidoRealizado";
+		
 	}
 
 }

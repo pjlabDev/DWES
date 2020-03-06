@@ -9,6 +9,8 @@ package com.pedro.modelo;
  */
 public class Carrito {
 	
+	private Integer codProd;
+	
 	private String nombre;
 	
 	private String descripcion;
@@ -18,19 +20,36 @@ public class Carrito {
 	private Integer categoria;
 	
 	private int unidades;
-	
+
 	public Carrito() {
 		super();
 	}
 	
-	public Carrito(String nombre, String descripcion, double peso, int unidades) {
+	public Carrito(Integer codProd, String nombre, String descripcion, double peso, int unidades) {
 		super();
+		this.codProd = codProd;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.peso = peso;
 		this.unidades = unidades;
 	}
+	
+	public Integer getCodProd() {
+		return codProd;
+	}
 
+	public void setCodProd(Integer codProd) {
+		this.codProd = codProd;
+	}
+
+	public int getUnidades() {
+		return unidades;
+	}
+
+	public void setUnidades(int unidades) {
+		this.unidades = unidades;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
