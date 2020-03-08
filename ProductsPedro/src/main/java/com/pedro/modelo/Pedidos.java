@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-@Table
+@Table(name="Pedidos")
 public class Pedidos {
 	
 	/** The Cod ped. */

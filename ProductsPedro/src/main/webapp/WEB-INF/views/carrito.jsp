@@ -12,6 +12,12 @@
 
 	<nav class="navbar navbar-expand-sm navbar-light bg-light nav-tabs">
 			<div class="navbar-brand col-md-3">
+			<form action="categoria" method="POST">
+					<input type="hidden" name="correo" value="${correo}">
+					<input type="hidden" name="clave" value="${clave}">
+					<input type="submit" class="btn btn-warning" value="Volver">
+			</form>
+			<a href="/" style="float: left;"><button type="button" class="btn btn-outline-danger">Cerrar Sesión</button></a>
 			</div>
 			<h1 style="text-align:center" class="col-md-6">Carrito</h1>
         </nav>
@@ -36,12 +42,13 @@
 					<tbody>
 						<c:forEach items="${carrito}" var="item">
 								<tr>
-									<td>${item.codProd}</td>
 									<td>${item.nombre}</td>
 									<td>${item.descripcion}</td>
 									<td>${item.peso}</td>
 									<td>${item.unidades}</td>
 									<form action="eliminar" method="POST" accept-charset="UTF-8">
+										<input type="hidden" name="correo" value="${correo}">
+										<input type="hidden" name="clave" value="${clave}">
 										<input type="hidden" name="codProd" value="${item.codProd}">
 										<td><input type="number" name="unidadesNuevas" min=1 max="${item.unidades}"></td>
 										<td><input type="submit" class="btn btn-danger" value="Eliminar"></td>
@@ -53,7 +60,11 @@
 			</div>
 		</div>
 		<div style="text-align:center;">
-			<a href="/pedidoRealizado"><button type="button" class="btn btn-primary">Realizar pedido</button></a>
+			<form action="realizarPedido" method="POST">
+				<input type="hidden" name="correo" value="${correo}">
+				<input type="hidden" name="clave" value="${clave}">
+				<button class="btn btn-primary">Realizar pedido</button>
+			</form>
 		</div>
 	</div>
 </body>

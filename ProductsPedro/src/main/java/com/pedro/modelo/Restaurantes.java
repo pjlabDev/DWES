@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-@Table
+@Table(name="Restaurantes")
 public class Restaurantes {
 	
 	/** The CodRes. */

@@ -4,7 +4,9 @@
 package com.pedro.controller;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pedro.modelo.Carrito;
 import com.pedro.modelo.Categorias;
+import com.pedro.modelo.Pedidos;
 import com.pedro.modelo.Productos;
 import com.pedro.modelo.Restaurantes;
 import com.pedro.repository.ProductRepository;
@@ -32,17 +35,11 @@ import com.pedro.service.ProductServiceImpl;
 @EnableAutoConfiguration
 public class HomeController {
 	
-	String user = "usuario";
-	String mensaje = "message";
-	String ventanaMantenimientoPeliculas = "mantenimientoPeliculas";
-	String listaDePeliculas = "listaPelis";
-	String listaDePeliculasCard = "listaPeliculasCard";
-	String errorPage = "errorPageToPelis";
-	String directorBD = "director";
 	Set<String> listaDirectores = new TreeSet<>();
-	ProductRepository productR = new ProductRepository();
 	ProductServiceImpl ps = new ProductServiceImpl();
+	ProductRepository pr = new ProductRepository();
 	List<Carrito> listaCarr = new ArrayList<>();
+	Date d = new Date();
 
 
 	@GetMapping(path = "/")
@@ -62,20 +59,21 @@ public class HomeController {
 		List<Categorias> list2 = new ArrayList<>();
 		List<Categorias> list3 = new ArrayList<>();
 
+
 		try {
 
-			listaRes = productR.login(correo, clave);
-			list1 = productR.mostrarNombreCategorias1();
-			list2 = productR.mostrarNombreCategorias2();
-			list3 = productR.mostrarNombreCategorias3();
-
+			listaRes = ps.login(correo, clave);
+			list1 = ps.mostrarNombreCategorias1();
+			list2 = ps.mostrarNombreCategorias2();
+			list3 = ps.mostrarNombreCategorias3();
+			
 		} catch (SQLException e) {
-			return errorPage;
+			return "errorPage";
 		}
 
 		if (listaRes.isEmpty()) {
 			message = "Usuario no encontrado en la base de datos.";
-			mp.put(mensaje, message);
+			mp.put("message", message);
 			return "index";
 
 		}
@@ -90,77 +88,118 @@ public class HomeController {
 	}
 	
 	@PostMapping(path = "/productos")
-	public String mostrarProductos(@RequestParam("codCat") int codCat, @RequestParam("correo") String correo, @RequestParam("clave") String clave, ModelMap mp) {
+	public String mostrarProductos(@RequestParam("cod") int cod, @RequestParam("correo") String correo, @RequestParam("clave") String clave, ModelMap mp) {
 		
 		List<Productos> listaProd = new ArrayList<>();
 		
 		try {
 			
-			listaProd = productR.mostrarProductosxCat(codCat);
+			listaProd = ps.mostrarProductosxCat(cod);
 			
 		} catch (SQLException e) {
-			return errorPage;
+			return "errorPage";
 		}
-		
+
 		mp.put("listaProd", listaProd);
-		mp.put("codCat", codCat);
+		mp.put("codCat", cod);
 		mp.put("correo", correo);
 		mp.put("clave", clave);
 		
 		return "productos";
 	}
 	
-	@PostMapping(path = "/productosC")
+	@PostMapping(path = "/comprar")
 	public String addCarrito(@RequestParam("codCat") int codCat, @RequestParam("codProd") Integer codProd,
 			@RequestParam("nombre") String nombre, @RequestParam("descripcion") String descripcion,
-			@RequestParam("peso") String peso, @RequestParam("unidades") String unidades, ModelMap mp) {
+			@RequestParam("peso") double peso, @RequestParam("unidades") int unidades, @RequestParam("correo") String correo, @RequestParam("clave") String clave, ModelMap mp) {
 		
-		List<Productos> listaProd = new ArrayList<>();
+		Carrito car = new Carrito(codProd, nombre, descripcion, peso, unidades);
 		
 		try {
 			
-			listaProd = productR.mostrarProductosxCat(codCat);
+			mp.put("listaProd", ps.mostrarProductosxCat(codCat));
 			
 		} catch (SQLException e) {
-			return errorPage;
+			return "errorPage";
 		}
 		
-		ps.agregarCarrito(codProd, nombre, descripcion, Double.parseDouble(peso), Integer.parseInt(unidades));
-		
-		mp.put("listaProd", listaProd);
+		this.listaCarr.add(car);
+		mp.put("correo", correo);
+		mp.put("clave", clave);
+		mp.put("codCat", codCat);
 		
 		return "productos";
 	}
 	
-	@GetMapping(path = "/carrito")
-	public String verCarrito(ModelMap mp) {
+	@PostMapping(path = "/carrito")
+	public String verCarrito(@RequestParam("correo") String correo, @RequestParam("clave") String clave, ModelMap mp) {
 		
-		listaCarr.addAll(ps.verCarrito());
-		
-		mp.put("carrito", listaCarr);
+		mp.put("carrito", this.listaCarr);
+		mp.put("correo", correo);
+		mp.put("clave", clave);
 		
 		return "carrito";
 	}
 	
 	@PostMapping(path = "/eliminar")
 	public String eliminarUnidad(@RequestParam("codProd") Integer codProd, @RequestParam("unidadesNuevas") String unidadesNuevas,
-			ModelMap mp) {
+			@RequestParam("correo") String correo, @RequestParam("clave") String clave, ModelMap mp) {
 		
-		for (Carrito carrito : listaCarr) {
+		for (int i = 0; i < this.listaCarr.size(); i++) {
 			
-			if(carrito.getCodProd() == codProd) {
-				carrito.setUnidades(carrito.getUnidades() - Integer.parseInt(unidadesNuevas));
+			if(this.listaCarr.get(i).getCodProd() == codProd) {
+				if(this.listaCarr.get(i).getUnidades() > 1 && (this.listaCarr.get(i).getUnidades() - Integer.parseInt(unidadesNuevas)) > 0) {
+					this.listaCarr.get(i).setUnidades(this.listaCarr.get(i).getUnidades() - Integer.parseInt(unidadesNuevas));
+				}else {
+					this.listaCarr.remove(i);
+				}
 			}
+			
 		}
 		
-		mp.put("carrito", listaCarr);
-		
+		mp.put("carrito", this.listaCarr);
+		mp.put("correo", correo);
+		mp.put("clave", clave);
 		
 		return "carrito";
-	}
+	}	
 	
-	@GetMapping(path = "/pedidoRealizado")
-	public String realizarPedido() {
+	@PostMapping(path = "/realizarPedido")
+	public String realizarPedido(@RequestParam("correo") String correo, @RequestParam("clave") String clave, ModelMap mp) {
+		
+		List<Pedidos> listaPedidos = new ArrayList<>();
+		
+		List<Integer> listaCodRes;
+		
+		String fecha = (new SimpleDateFormat("yyyy-MM-dd").format(d));
+		
+		int codPedido = 0;
+		
+		try {
+			
+			listaCodRes = ps.obtenerCodRes(correo);
+			
+			ps.altaPedido(fecha, 0, listaCodRes.get(0));
+			
+			listaPedidos = ps.listarPedidosNoEnviados();
+			
+			for (Pedidos p  : listaPedidos) {
+				codPedido = p.getCodPed();
+			}
+			
+			for (int i = 0; i < this.listaCarr.size(); i++) {
+				
+				ps.altaPedidosProductos(codPedido, this.listaCarr.get(i).getCodProd(), this.listaCarr.get(i).getUnidades());
+				
+			}
+			
+		} catch (SQLException e) {
+			return "errorPage";
+		}
+		
+		mp.put("listaPedidos", listaPedidos);
+		mp.put("correo", correo);
+		mp.put("clave", clave);
 		
 		return "pedidoRealizado";
 		

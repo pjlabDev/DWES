@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-@Table
+@Table(name="Categorias")
 public class Categorias {
 
 	/** The Codat. */

@@ -9,133 +9,134 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.swing.table.DefaultTableModel;
-
 import com.pedro.modelo.Carrito;
 import com.pedro.modelo.Categorias;
+import com.pedro.modelo.Pedidos;
 import com.pedro.modelo.Productos;
 import com.pedro.modelo.Restaurantes;
+import com.pedro.repository.ProductRepository;
 
 /**
  * @author pedro
  *
  */
 public class ProductServiceImpl implements ProductService {
-
+	
+	List<Categorias> listaCat;
+	List<Productos> listaProd;
 	Set<String> listaDirectores = new TreeSet<>();
-	List<Carrito> listaCarrito = new ArrayList<>();
-	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Eclipselink_JPA");
-	DefaultTableModel model;
-
+	List<Carrito> listaCarrito;
+	ProductRepository pRepo = new ProductRepository();
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Categorias> mostrarNombreCategorias1() throws SQLException {
-		
-		EntityManager em = emfactory.createEntityManager();
-		em.getTransaction().begin();
-		
-		List<Categorias> listaCat;
-		
-		Query query = em.createQuery("SELECT c FROM Categorias c WHERE c.CodCat = :codcat", Categorias.class);
-		query.setParameter("codcat", 1);
-
-		listaCat = query.getResultList();
-		
-		return listaCat;
-
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Categorias> mostrarNombreCategorias2() throws SQLException {
-		
-		EntityManager em = emfactory.createEntityManager();
-		em.getTransaction().begin();
-		
-		List<Categorias> listaCat;
-		
-		Query query = em.createQuery("SELECT c FROM Categorias c WHERE c.CodCat = :codcat", Categorias.class);
-		query.setParameter("codcat", 2);
-
-		listaCat = query.getResultList();
-		
-		return listaCat;
-
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Categorias> mostrarNombreCategorias3() throws SQLException {
-		
-		EntityManager em = emfactory.createEntityManager();
-		em.getTransaction().begin();
-		
-		List<Categorias> listaCat;
-		
-		Query query = em.createQuery("SELECT c FROM Categorias c WHERE c.CodCat = :codcat", Categorias.class);
-		query.setParameter("codcat", 3);
-
-		listaCat = query.getResultList();
-		
-		return listaCat;
-
-	}
-
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Restaurantes> login(String correo, String clave) throws SQLException {
-		
-		EntityManager em = emfactory.createEntityManager();
-		em.getTransaction().begin();
-		
+
 		List<Restaurantes> listaRes;
-		
-		Query query = em.createQuery("SELECT r FROM Restaurantes r WHERE r.Correo = :correo AND r.Clave = :clave", Restaurantes.class);
-		query.setParameter("correo", correo);
-		query.setParameter("clave", clave);
-		
-		listaRes = query.getResultList();
+
+		listaRes = pRepo.login(correo, clave);
 
 		return listaRes;
 
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<Productos> mostrarProductosxCat(int codCat) throws SQLException {
-		
-		EntityManager em = emfactory.createEntityManager();
-		em.getTransaction().begin();
-		
-		List<Productos> listaProd;
-		
-		Query query = em.createQuery("SELECT p FROM Productos p WHERE p.Categoria = :codCat", Productos.class);
-		query.setParameter("codCat", codCat);
+	public List<Categorias> mostrarNombreCategorias1() throws SQLException {
 
-		listaProd = query.getResultList();
+		listaCat = new ArrayList<>();
+		
+		listaCat = pRepo.mostrarNombreCategorias1();
+
+		return listaCat;
+
+	}
+	
+	@Override
+	public List<Categorias> mostrarNombreCategorias2() throws SQLException {
+
+		listaCat = new ArrayList<>();
+		
+		listaCat = pRepo.mostrarNombreCategorias2();
+
+		return listaCat;
+
+	}
+	
+	@Override
+	public List<Categorias> mostrarNombreCategorias3() throws SQLException {
+
+		listaCat = new ArrayList<>();
+		
+		listaCat = pRepo.mostrarNombreCategorias3();
+
+		return listaCat;
+
+	}
+	
+	@Override
+	public List<Productos> mostrarProductosxCat(int codCat) throws SQLException{
+		
+		listaProd = new ArrayList<>();
+		
+		listaProd = pRepo.mostrarProductosxCat(codCat);
 		
 		return listaProd;
-
+		
 	}
 	
 	@Override
 	public List<Carrito> agregarCarrito(Integer codProd, String nombre, String descripcion, double peso, int unidades) {
 		
-		Carrito car = new Carrito(codProd, nombre, descripcion, peso, unidades);
-		
-		listaCarrito.add(car);
+		listaCarrito.addAll(pRepo.agregarCarrito(codProd, nombre, descripcion, peso, unidades));
 		
 		return listaCarrito;
-
+		
 	}
 	
-	public List<Carrito> verCarrito() {
+	@Override
+	public List<Carrito> verCarrito(){
+		
 		return listaCarrito;
+		
+	}
+	
+	@Override
+	public List<Integer> obtenerCodRes(String correo) throws SQLException {
+		
+		List<Integer> listaCodRes;
+		
+		listaCodRes = pRepo.obtenerCodRes(correo);
+		
+		return listaCodRes;
+	}
+	
+	@Override
+	public void altaPedido(String fecha, int enviado, int codRes) throws SQLException {
+
+		pRepo.altaPedido(fecha, enviado, codRes);
+	}
+
+	@Override
+	public List<Pedidos> listarPedidosNoEnviados() throws SQLException {
+		
+		List<Pedidos> listaPedidos;
+		
+		listaPedidos = pRepo.listarPedidosNoEnviados();
+		
+		return listaPedidos;
+	}
+
+	@Override
+	public void altaPedidosProductos(int pedido, int producto, int unidades) throws SQLException {
+		
+		pRepo.altaPedidosProductos(pedido, producto, unidades);
+		
+	}
+
+	@Override
+	public void enviarPedido() throws SQLException {
+		
+		pRepo.enviarPedido();
+		
 	}
 	
 }
