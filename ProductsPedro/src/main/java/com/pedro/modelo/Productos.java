@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 /**
  * The Class Productos.
  *
- * @author estudiante
+ * @author pedro
  */
 
 @Entity
@@ -71,6 +71,9 @@ public class Productos {
 		this.Categoria = Categoria;
 	}
 	
+	/**
+	 * Instantiates a new productos.
+	 */
 	public Productos() {
 		
 	}

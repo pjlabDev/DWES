@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 /**
  * The Class Restaurantes.
  *
- * @author estudiante
+ * @author pedro
  */
 
 @Entity
@@ -78,6 +78,9 @@ public class Restaurantes {
 		this.Direccion = Direccion;
 	}
 	
+	/**
+	 * Instantiates a new restaurantes.
+	 */
 	public Restaurantes() {
 		
 	}

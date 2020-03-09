@@ -3,7 +3,6 @@
  */
 package com.pedro.controller;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,11 +24,12 @@ import com.pedro.modelo.Pedidos;
 import com.pedro.modelo.Productos;
 import com.pedro.modelo.Restaurantes;
 import com.pedro.repository.ProductRepository;
+//import com.pedro.service.EmailServiceImpl;
 import com.pedro.service.ProductServiceImpl;
 
 /**
  * 
- * @author usuario
+ * @author pedro
  * 
  */
 @Controller
@@ -40,11 +41,16 @@ public class HomeController {
 	ProductRepository pr = new ProductRepository();
 	List<Carrito> listaCarr = new ArrayList<>();
 	Date d = new Date();
+	
+//	@Autowired
+//	EmailServiceImpl em;
 
 
 	@GetMapping(path = "/")
 	public String irPrincipal(ModelMap mp) {
-
+		
+		this.listaCarr.clear();
+		
 		return "index";
 	}
 
@@ -67,7 +73,7 @@ public class HomeController {
 			list2 = ps.mostrarNombreCategorias2();
 			list3 = ps.mostrarNombreCategorias3();
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			return "errorPage";
 		}
 
@@ -96,7 +102,7 @@ public class HomeController {
 			
 			listaProd = ps.mostrarProductosxCat(cod);
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			return "errorPage";
 		}
 
@@ -115,11 +121,37 @@ public class HomeController {
 		
 		Carrito car = new Carrito(codProd, nombre, descripcion, peso, unidades);
 		
+//		if(this.listaCarr.isEmpty()) {
+//			this.listaCarr.add(car);
+//		}
+//		
+//		if(!this.listaCarr.contains(car)) {
+//			this.listaCarr.add(car);
+//		}
+//		
+//		for (int i = 0; i < this.listaCarr.size(); i++) {
+//			if(this.listaCarr.get(i).getCodProd() == codProd) {
+//				this.listaCarr.get(i).setUnidades(this.listaCarr.get(i).getUnidades() + unidades);
+//			}
+//		}
+		
+//		if(this.listaCarr.isEmpty()) {
+//			this.listaCarr.add(car);
+//		}else if(this.listaCarr.contains(car)){
+//			for (Carrito carrito : listaCarr) {
+//				if(carrito.getCodProd() == codProd) {
+//					carrito.setUnidades(carrito.getUnidades() + unidades);
+//				}
+//			}
+//		}else {
+//			this.listaCarr.add(car);
+//		}
+		
 		try {
 			
 			mp.put("listaProd", ps.mostrarProductosxCat(codCat));
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			return "errorPage";
 		}
 		
@@ -189,13 +221,21 @@ public class HomeController {
 			
 			for (int i = 0; i < this.listaCarr.size(); i++) {
 				
-				ps.altaPedidosProductos(codPedido, this.listaCarr.get(i).getCodProd(), this.listaCarr.get(i).getUnidades());
+				ps.altaPedidosProductos(codPedido, this.listaCarr.get(i).getCodProd(), this.listaCarr.get(i).getUnidades());				
+				
+				ps.updatearStock(this.listaCarr.get(i).getUnidades(), this.listaCarr.get(i).getCodProd());
 				
 			}
 			
-		} catch (SQLException e) {
+//			pr.enviarPedido();
+			
+		} catch (Exception e) {
 			return "errorPage";
 		}
+		
+		this.listaCarr.clear();
+		
+//		em.enviarEmail("perezprueba55@gmail.com");
 		
 		mp.put("listaPedidos", listaPedidos);
 		mp.put("correo", correo);

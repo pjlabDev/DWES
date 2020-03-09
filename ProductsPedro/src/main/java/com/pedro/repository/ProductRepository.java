@@ -24,18 +24,33 @@ import com.pedro.modelo.PedidosProductos;
 import com.pedro.modelo.Productos;
 import com.pedro.modelo.Restaurantes;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author pedro
+ * The Class ProductRepository.
  *
+ * @author pedro
  */
 @Repository("productRepository")
 public class ProductRepository implements ProductRepositoryI {
-
+	
+	/** The lista directores. */
 	Set<String> listaDirectores = new TreeSet<>();
+	
+	/** The lista carrito. */
 	List<Carrito> listaCarrito = new ArrayList<>();
+	
+	/** The emfactory. */
 	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Eclipselink_JPA");
+	
+	/** The model. */
 	DefaultTableModel model;
 	
+	/**
+	 * Mostrar nombre categorias 1.
+	 *
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Categorias> mostrarNombreCategorias1() throws SQLException {
@@ -54,6 +69,12 @@ public class ProductRepository implements ProductRepositoryI {
 
 	}
 	
+	/**
+	 * Mostrar nombre categorias 2.
+	 *
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Categorias> mostrarNombreCategorias2() throws SQLException {
@@ -72,6 +93,12 @@ public class ProductRepository implements ProductRepositoryI {
 
 	}
 	
+	/**
+	 * Mostrar nombre categorias 3.
+	 *
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Categorias> mostrarNombreCategorias3() throws SQLException {
@@ -90,6 +117,14 @@ public class ProductRepository implements ProductRepositoryI {
 
 	}
 
+	/**
+	 * Login.
+	 *
+	 * @param correo the correo
+	 * @param clave the clave
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Restaurantes> login(String correo, String clave) throws SQLException {
@@ -109,6 +144,13 @@ public class ProductRepository implements ProductRepositoryI {
 
 	}
 	
+	/**
+	 * Mostrar productosx cat.
+	 *
+	 * @param codCat the cod cat
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Productos> mostrarProductosxCat(int codCat) throws SQLException {
@@ -118,7 +160,7 @@ public class ProductRepository implements ProductRepositoryI {
 		
 		List<Productos> listaProd;
 		
-		Query query = em.createQuery("SELECT p FROM Productos p WHERE p.Categoria = :codCat", Productos.class);
+		Query query = em.createQuery("SELECT p FROM Productos p WHERE p.Categoria = :codCat AND p.Stock > 0", Productos.class);
 		query.setParameter("codCat", codCat);
 
 		listaProd = query.getResultList();
@@ -127,6 +169,16 @@ public class ProductRepository implements ProductRepositoryI {
 
 	}
 	
+	/**
+	 * Agregar carrito.
+	 *
+	 * @param codProd the cod prod
+	 * @param nombre the nombre
+	 * @param descripcion the descripcion
+	 * @param peso the peso
+	 * @param unidades the unidades
+	 * @return the list
+	 */
 	@Override
 	public List<Carrito> agregarCarrito(Integer codProd, String nombre, String descripcion, double peso, int unidades) {
 		
@@ -138,10 +190,22 @@ public class ProductRepository implements ProductRepositoryI {
 
 	}
 	
+	/**
+	 * Ver carrito.
+	 *
+	 * @return the list
+	 */
 	public List<Carrito> verCarrito() {
 		return listaCarrito;
 	}
 	
+	/**
+	 * Obtener cod res.
+	 *
+	 * @param correo the correo
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Integer> obtenerCodRes(String correo) throws SQLException {
@@ -159,6 +223,14 @@ public class ProductRepository implements ProductRepositoryI {
 		return listaCodRes;
 	}
 	
+	/**
+	 * Alta pedido.
+	 *
+	 * @param fecha the fecha
+	 * @param enviado the enviado
+	 * @param codRes the cod res
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void altaPedido(String fecha, int enviado, int codRes) throws SQLException {
 		
@@ -175,6 +247,12 @@ public class ProductRepository implements ProductRepositoryI {
 		
 	}
 	
+	/**
+	 * Listar pedidos no enviados.
+	 *
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pedidos> listarPedidosNoEnviados() throws SQLException {
@@ -191,6 +269,14 @@ public class ProductRepository implements ProductRepositoryI {
 		return listaPedidos;
 	}
 	
+	/**
+	 * Alta pedidos productos.
+	 *
+	 * @param pedido the pedido
+	 * @param producto the producto
+	 * @param unidades the unidades
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void altaPedidosProductos(int pedido, int producto, int unidades) throws SQLException {
 		
@@ -206,6 +292,11 @@ public class ProductRepository implements ProductRepositoryI {
 		em.getTransaction( ).commit( );
 	}
 
+	/**
+	 * Enviar pedido.
+	 *
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void enviarPedido() throws SQLException {
 		EntityManager em = emfactory.createEntityManager();
@@ -216,6 +307,52 @@ public class ProductRepository implements ProductRepositoryI {
 		query.executeUpdate();
 		em.getTransaction( ).commit( );
 		
+	}
+
+	/**
+	 * Updatear stock.
+	 *
+	 * @param unidades the unidades
+	 * @param codProd the cod prod
+	 * @throws SQLException the SQL exception
+	 */
+	@Override
+	public void updatearStock(int unidades, int codProd) throws SQLException {
+		
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		
+		Query query = em.createQuery("UPDATE Productos p SET p.Stock = (p.Stock - :unidades) WHERE p.CodProd = :codProd");
+		query.setParameter("unidades", unidades);
+		query.setParameter("codProd", codProd);
+		
+		query.executeUpdate();
+		em.getTransaction( ).commit( );
+		
+	}
+
+	/**
+	 * Mostrar productosx cod.
+	 *
+	 * @param codProd the cod prod
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Productos> mostrarProductosxCod(int codProd) throws SQLException {
+		
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		
+		List<Productos> listaProd;
+		
+		Query query = em.createQuery("SELECT p FROM Productos p WHERE p.CodProd = :codProd", Productos.class);
+		query.setParameter("codProd", codProd);
+
+		listaProd = query.getResultList();
+		
+		return listaProd;
 	}
 
 }

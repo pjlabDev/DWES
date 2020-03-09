@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 /**
  * The Class PedidosProductos.
  *
- * @author estudiante
+ * @author pedro
  */
 
 @Entity
@@ -57,6 +57,9 @@ public class PedidosProductos {
 		this.Unidades = Unidades;
 	}
 	
+	/**
+	 * Instantiates a new pedidos productos.
+	 */
 	public PedidosProductos() {
 		
 	}

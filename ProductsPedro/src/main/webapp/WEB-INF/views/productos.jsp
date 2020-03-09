@@ -19,6 +19,7 @@
 				</form>
 			</div>
 			<h1 style="text-align:center" class="col-md-6">Productos</h1>
+			<a href="/" style="float: left;"><button type="button" class="btn btn-outline-danger my-2 my-sm-0">Cerrar Sesión</button></a>
         </nav>
 	
 	<div style="text-align:center">
@@ -46,14 +47,14 @@
 									<form action="comprar" method="POST">
 										<input type="hidden" name="correo" value="${correo}">
 										<input type="hidden" name="clave" value="${clave}">
-										<td><input type="text" readonly="readonly" name="codCat" value="${codCat}"></td>
+										<input type="hidden" readonly="readonly" name="codCat" value="${codCat}">
 										<td><input type="text" readonly="readonly" name="codProd" value="${item.codProd}"></td>
 										<td><input type="text" readonly="readonly" name="nombre" value="${item.nombre}"></td>
 										<td><input type="text" readonly="readonly" name="descripcion" value="${item.descripcion}"></td>
 										<td><input type="text" readonly="readonly" name="peso" value="${item.peso}"></td>
 										<td><input type="text" readonly="readonly" name="stock" value="${item.stock}"></td>
 										<td><input type="text" readonly="readonly" name="categoria" value="${item.categoria}"></td>
-										<td><input type="number" name="unidades" min=1 max="${item.stock}"></td>
+										<td><input type="number" name="unidades" min=1 max="${item.stock}" required></td>
 										<td><button class="btn btn-secondary" value="Comprar">Comprar</button></td>
 									</form>
 								</tr>							

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Categorias.
  *
@@ -50,14 +51,27 @@ public class Categorias {
 		this.Descripcion = Descripcion;
 	}
 	
+	/**
+	 * Instantiates a new categorias.
+	 */
 	public Categorias() {
 		
 	}
 	
+	/**
+	 * Gets the cod cat.
+	 *
+	 * @return the cod cat
+	 */
 	public int getCodCat() {
 		return CodCat;
 	}
 
+	/**
+	 * Sets the cod cat.
+	 *
+	 * @param codCat the new cod cat
+	 */
 	public void setCodCat(int codCat) {
 		CodCat = codCat;
 	}

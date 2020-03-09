@@ -6,8 +6,6 @@ package com.pedro.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import com.pedro.modelo.Carrito;
 import com.pedro.modelo.Categorias;
@@ -16,18 +14,34 @@ import com.pedro.modelo.Productos;
 import com.pedro.modelo.Restaurantes;
 import com.pedro.repository.ProductRepository;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author pedro
+ * The Class ProductServiceImpl.
  *
+ * @author pedro
  */
 public class ProductServiceImpl implements ProductService {
 	
+	/** The lista cat. */
 	List<Categorias> listaCat;
+	
+	/** The lista prod. */
 	List<Productos> listaProd;
-	Set<String> listaDirectores = new TreeSet<>();
+	
+	/** The lista carrito. */
 	List<Carrito> listaCarrito;
+	
+	/** The p repo. */
 	ProductRepository pRepo = new ProductRepository();
 	
+	/**
+	 * Login.
+	 *
+	 * @param correo the correo
+	 * @param clave the clave
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public List<Restaurantes> login(String correo, String clave) throws SQLException {
 
@@ -39,6 +53,12 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 	
+	/**
+	 * Mostrar nombre categorias 1.
+	 *
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public List<Categorias> mostrarNombreCategorias1() throws SQLException {
 
@@ -50,6 +70,12 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 	
+	/**
+	 * Mostrar nombre categorias 2.
+	 *
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public List<Categorias> mostrarNombreCategorias2() throws SQLException {
 
@@ -61,6 +87,12 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 	
+	/**
+	 * Mostrar nombre categorias 3.
+	 *
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public List<Categorias> mostrarNombreCategorias3() throws SQLException {
 
@@ -72,6 +104,13 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 	
+	/**
+	 * Mostrar productosx cat.
+	 *
+	 * @param codCat the cod cat
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public List<Productos> mostrarProductosxCat(int codCat) throws SQLException{
 		
@@ -83,6 +122,16 @@ public class ProductServiceImpl implements ProductService {
 		
 	}
 	
+	/**
+	 * Agregar carrito.
+	 *
+	 * @param codProd the cod prod
+	 * @param nombre the nombre
+	 * @param descripcion the descripcion
+	 * @param peso the peso
+	 * @param unidades the unidades
+	 * @return the list
+	 */
 	@Override
 	public List<Carrito> agregarCarrito(Integer codProd, String nombre, String descripcion, double peso, int unidades) {
 		
@@ -92,6 +141,11 @@ public class ProductServiceImpl implements ProductService {
 		
 	}
 	
+	/**
+	 * Ver carrito.
+	 *
+	 * @return the list
+	 */
 	@Override
 	public List<Carrito> verCarrito(){
 		
@@ -99,6 +153,13 @@ public class ProductServiceImpl implements ProductService {
 		
 	}
 	
+	/**
+	 * Obtener cod res.
+	 *
+	 * @param correo the correo
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public List<Integer> obtenerCodRes(String correo) throws SQLException {
 		
@@ -109,12 +170,26 @@ public class ProductServiceImpl implements ProductService {
 		return listaCodRes;
 	}
 	
+	/**
+	 * Alta pedido.
+	 *
+	 * @param fecha the fecha
+	 * @param enviado the enviado
+	 * @param codRes the cod res
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void altaPedido(String fecha, int enviado, int codRes) throws SQLException {
 
 		pRepo.altaPedido(fecha, enviado, codRes);
 	}
 
+	/**
+	 * Listar pedidos no enviados.
+	 *
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public List<Pedidos> listarPedidosNoEnviados() throws SQLException {
 		
@@ -125,6 +200,14 @@ public class ProductServiceImpl implements ProductService {
 		return listaPedidos;
 	}
 
+	/**
+	 * Alta pedidos productos.
+	 *
+	 * @param pedido the pedido
+	 * @param producto the producto
+	 * @param unidades the unidades
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void altaPedidosProductos(int pedido, int producto, int unidades) throws SQLException {
 		
@@ -132,11 +215,47 @@ public class ProductServiceImpl implements ProductService {
 		
 	}
 
+	/**
+	 * Enviar pedido.
+	 *
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void enviarPedido() throws SQLException {
 		
 		pRepo.enviarPedido();
 		
+	}
+
+	/**
+	 * Updatear stock.
+	 *
+	 * @param unidades the unidades
+	 * @param codProd the cod prod
+	 * @throws SQLException the SQL exception
+	 */
+	@Override
+	public void updatearStock(int unidades, int codProd) throws SQLException {
+		
+		pRepo.updatearStock(unidades, codProd);
+		
+	}
+
+	/**
+	 * Mostrar productosx cod.
+	 *
+	 * @param codProd the cod prod
+	 * @return the list
+	 * @throws SQLException the SQL exception
+	 */
+	@Override
+	public List<Productos> mostrarProductosxCod(int codProd) throws SQLException {
+		
+		List<Productos> listaProd;
+		
+		listaProd = pRepo.mostrarProductosxCod(codProd);
+		
+		return listaProd;
 	}
 	
 }
