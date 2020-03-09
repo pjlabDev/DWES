@@ -7,8 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -24,7 +22,7 @@ import com.pedro.modelo.Pedidos;
 import com.pedro.modelo.Productos;
 import com.pedro.modelo.Restaurantes;
 import com.pedro.repository.ProductRepository;
-//import com.pedro.service.EmailServiceImpl;
+import com.pedro.service.EmailServiceImpl;
 import com.pedro.service.ProductServiceImpl;
 
 /**
@@ -36,14 +34,15 @@ import com.pedro.service.ProductServiceImpl;
 @EnableAutoConfiguration
 public class HomeController {
 	
-	Set<String> listaDirectores = new TreeSet<>();
 	ProductServiceImpl ps = new ProductServiceImpl();
 	ProductRepository pr = new ProductRepository();
 	List<Carrito> listaCarr = new ArrayList<>();
 	Date d = new Date();
 	
+	EmailServiceImpl em = new EmailServiceImpl();
+	
 //	@Autowired
-//	EmailServiceImpl em;
+//	EmailService em;
 
 
 	@GetMapping(path = "/")
@@ -120,32 +119,6 @@ public class HomeController {
 			@RequestParam("peso") double peso, @RequestParam("unidades") int unidades, @RequestParam("correo") String correo, @RequestParam("clave") String clave, ModelMap mp) {
 		
 		Carrito car = new Carrito(codProd, nombre, descripcion, peso, unidades);
-		
-//		if(this.listaCarr.isEmpty()) {
-//			this.listaCarr.add(car);
-//		}
-//		
-//		if(!this.listaCarr.contains(car)) {
-//			this.listaCarr.add(car);
-//		}
-//		
-//		for (int i = 0; i < this.listaCarr.size(); i++) {
-//			if(this.listaCarr.get(i).getCodProd() == codProd) {
-//				this.listaCarr.get(i).setUnidades(this.listaCarr.get(i).getUnidades() + unidades);
-//			}
-//		}
-		
-//		if(this.listaCarr.isEmpty()) {
-//			this.listaCarr.add(car);
-//		}else if(this.listaCarr.contains(car)){
-//			for (Carrito carrito : listaCarr) {
-//				if(carrito.getCodProd() == codProd) {
-//					carrito.setUnidades(carrito.getUnidades() + unidades);
-//				}
-//			}
-//		}else {
-//			this.listaCarr.add(car);
-//		}
 		
 		try {
 			
@@ -236,6 +209,8 @@ public class HomeController {
 		this.listaCarr.clear();
 		
 //		em.enviarEmail("perezprueba55@gmail.com");
+		
+		em.enviarCorreo(correo, "Compra realizada", "Su pedido se enviará de forma inmediata! Esperemos que sea de su agrado haber comprado en nuestra compañia! Le esperamos de nuevo, un saludo!!");
 		
 		mp.put("listaPedidos", listaPedidos);
 		mp.put("correo", correo);

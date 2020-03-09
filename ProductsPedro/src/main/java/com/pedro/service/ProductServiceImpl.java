@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.pedro.modelo.Carrito;
 import com.pedro.modelo.Categorias;
 import com.pedro.modelo.Pedidos;
@@ -20,6 +22,7 @@ import com.pedro.repository.ProductRepository;
  *
  * @author pedro
  */
+@Service
 public class ProductServiceImpl implements ProductService {
 	
 	/** The lista cat. */
